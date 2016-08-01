@@ -68,7 +68,11 @@ The pattern here is any number `n` is achieved by applying it's first argument, 
     zero: λ f x. x
     succ: λ n f x. f (n f x)
    
-We have defined natural numbers inductively, using two cases. 
+We have defined natural numbers inductively, using two cases. Zero is defined exactly as we did earlier, and it's successor, which essentially means n + 1. Every natural can be composed using those two functions. For example, we can achieve the number 2, by using only zero and successor.
+
+    2 = succ (succ zero) 
+      = (λ n f x. f (n f x)) ((λ n f x. f (n f x)) λ f x. x) 
+      = λ f x. f (f x)
 
 # References
 1. [Lambda Calculus](https://en.wikipedia.org/wiki/Lambda_calculus). Wikipedia: The Free Encyclopedia
