@@ -17,18 +17,18 @@ As we will see later, this process is called currying [1].
 Pure &lambda; is also quite restrictive. You will not find features such as top-level named functions or variables, locally scoped variables, pattern matching, and many other features you might expect of a general purpose programming languages. Fortunately, these extensions are easy to add while preserving the semantics of &lambda;.
 
 # Syntax
-&lambda;'s syntax is quite minimal. There are only 3 types of expressions
+&lambda;'s syntax is quite minimal. There are only 3 types of expressions [2]
  * Variables
  * Lambda abstraction
  * Function application
  
-Any expression maybe be parenthesized to in order to change the evaluation order. Expressions are evaluated from left to right.
+Any expression maybe be parenthesized to in order to change the evaluation order [?]. Expressions are evaluated from left to right [?].
  
 ## Variables
-A variable is just a string of characters that may hold a specific value, just as you would expect. In &lambda;, we typically use the convention of a single lower case letter. For example: `x`, `y`, and `z` are all valid variables.
+A variable is just a string of characters that may hold a specific value [?], just as you would expect. In &lambda;, we typically use the convention of a single lower case letter. For example: `x`, `y`, and `z` are all valid variables.
 
 ## Lambda abstraction
-A lambda abstraction is an anonymous function definition. As we saw earlier, functions take exactly one argument, and may return another function. Conventionally, we prefix abstractions with a `λ`, taking the following form.
+A lambda abstraction is an anonymous function definition [?]. As we saw earlier, functions take exactly one argument, and may return another function. Conventionally, we prefix abstractions with a `λ`, taking the following form.
 
     λv. body
     
@@ -40,7 +40,7 @@ Here are a few examples:
 
 The first example is the `id` function, it just returns its first argument. The second takes two arguments, and returns the first. This is often used to simulate the value `true`. Finally, the last example applies its first argument to its second argument.
 
-We often omit the inner abstractions to save space. The following two expressions would be equivalent
+We often omit the inner abstractions to save space [?]. The following two expressions would be equivalent
 
     λf. λx. λy. f x y
     λf x y. f x y
