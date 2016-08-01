@@ -51,6 +51,24 @@ An abstraction is applied by using the form `f x y z`, where `f` is a lambda abs
     (λx. x) y
     (λx. x) x
     (λx y. x) (λx. x)
+    
+# Examples
+&lambda; is surprisingly expressive for a language so small. We will now look at representing simple data types using pure &lambda;, including natural numbers, booleans, and records.
+
+# Natural Numbers
+Natural numbers can be achieved by using what we call Church Numerals.
+
+    0: λ f x. x
+    1: λ f x. f x
+    2: λ f x. f (f x)
+    3: λ f x. f (f (f x))
+
+The pattern here is any number `n` is achieved by applying it's first argument, `f`, `n` times, to its second argument, `x`. We can generalize this to two functions
+
+    zero: λ f x. x
+    succ: λ n f x. f (n f x)
+   
+We have defined natural numbers inductively, using two cases. 
 
 # References
 1. [Lambda Calculus](https://en.wikipedia.org/wiki/Lambda_calculus). Wikipedia: The Free Encyclopedia
