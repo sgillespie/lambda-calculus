@@ -52,23 +52,23 @@ An abstraction is applied by using the form `f x y z`, where `f` is a lambda abs
     (λx. x) x
     (λx y. x) (λx. x)
     
-# Examples
-&lambda; is surprisingly expressive for a language so small. We will now look at representing simple data types using pure &lambda;, including natural numbers, booleans, and records.
+# Example
+&lambda; is surprisingly expressive for a language so small. We will now look at representing the set of nonnegative integers using pure &lambda;. These ideas can be used to represent nearly any data type, including booleans, records, and algebraic data types.
 
 # Natural Numbers
-Natural numbers can be achieved by using what we call Church Numerals.
+Natural numbers can be achieved by using what we call Church Numerals [1].
 
     0: λ f x. x
     1: λ f x. f x
     2: λ f x. f (f x)
     3: λ f x. f (f (f x))
 
-The pattern here is any number `n` is achieved by applying it's first argument, `f`, `n` times, to its second argument, `x`. We can generalize this to two functions
+Any number `n` is achieved by applying it's first argument, `f`, `n` times, to its second argument, `x`. We can generalize this to two functions
 
     zero: λ f x. x
     succ: λ n f x. f (n f x)
    
-We have defined natural numbers inductively, using two cases. Zero is defined exactly as we did earlier, and it's successor, which essentially means n + 1. Every natural can be composed using those two functions. For example, we can achieve the number 2, by using only zero and successor.
+We have defined natural numbers inductively, using two cases. Zero is defined exactly as we did earlier, and it's successor, as n + 1. Every natural can be composed using those two functions. For example, we can achieve the number 2, by using only zero and successor.
 
     2 = succ (succ zero) 
       = (λ n f x. f (n f x)) ((λ n f x. f (n f x)) λ f x. x) 
