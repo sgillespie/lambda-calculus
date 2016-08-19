@@ -73,9 +73,13 @@ We have defined natural numbers inductively, using two cases. Zero is defined ex
     2 = succ (succ zero) 
       = (λ n f x. f (n f x)) ((λ n f x. f (n f x)) λ f x. x) 
       = λ f x. f (f x)
+      
+# Bound and Free Variables
+&lambda; scoping rules are similar to lexical scoping [5]. An occurrence of a variable `x` is **bound** when it occurs in the body `t` in an abstraction `λ x. t`. An occurrence of a variable is **free** when it is not bound by an abstraction [2]. For example, in the expression `λ x. x`, `x` is bound by the enclosing abstraction. In the expression `λ y. f y`, `f` occurs free while `y` is bound.
 
 # References
 1. [Lambda Calculus](https://en.wikipedia.org/wiki/Lambda_calculus). Wikipedia: The Free Encyclopedia
 2. Types and Programming Languages, Benjamin C. Pierce
 3. [Simply typed lambda calculus](https://en.wikipedia.org/wiki/Simply_typed_lambda_calculus). Wikipedia: The Free Encyclopedia
 4. [System F](https://en.wikipedia.org/wiki/System_F). Wikipedia: The Free Encyclopedia
+5. [Lexcial Scoping](https://en.wikipedia.org/wiki/Scope_(computer_science)#Lexical_scoping). Wikipedia: The Free Encycolopedia
