@@ -65,7 +65,7 @@ We often omit the inner abstractions to save space. The following two expression
 # Example
 &lambda; is surprisingly expressive for a language so small. We will now look at representing the set of nonnegative integers using pure &lambda;. These ideas can be used to represent nearly any data type, including booleans, records, and algebraic data types.
 
-# Natural Numbers
+## Natural Numbers
 Natural numbers can be achieved by using what we call Church Numerals [1].
 
     0: λ f x. x
