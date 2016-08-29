@@ -84,6 +84,13 @@ We have defined natural numbers inductively, using two cases. Zero is defined ex
       = (λ n f x. f (n f x)) ((λ n f x. f (n f x)) λ f x. x) 
       = λ f x. f (f x)
 
+# Evaluation
+We have now seen how to construct valid &lambda; expressions. We now focus on how to evaluate those expressions. Our process involves identifying **reducible expressions** (*redexes*) and applying conversion rules to them. We do this repeatedly until there are no more redexes. When there are no redexes, the expression is in *Normal Form* [6].
+
+There are three conversion rules [6]:
+ * Beta reduction
+ * Alpha conversion
+ * Eta conversion
 
 # References
 1. [Lambda Calculus](https://en.wikipedia.org/wiki/Lambda_calculus). Wikipedia: The Free Encyclopedia
