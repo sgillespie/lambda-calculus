@@ -92,6 +92,11 @@ There are three conversion rules [6]:
  * Alpha conversion
  * Eta conversion
 
+## Beta Reduction
+&Beta-reduction is simply function application. We apply an abstraction `f x. t` to an argument `y` by replacing all free occurrences of `x` in `t` by `y` [3]. This is &Beta;-reduction. Consider the application on id
+
+    (λ x. x) y → y
+
 # References
 1. [Lambda Calculus](https://en.wikipedia.org/wiki/Lambda_calculus). Wikipedia: The Free Encyclopedia
 2. Types and Programming Languages. Benjamin C. Pierce
