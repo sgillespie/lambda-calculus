@@ -93,9 +93,16 @@ There are three conversion rules [6]:
  * Eta conversion
 
 ## Beta Reduction
-&Beta-reduction is simply function application. We apply an abstraction `f x. t` to an argument `y` by replacing all free occurrences of `x` in `t` by `y` [3]. This is &Beta;-reduction. Consider the application on id
+&Beta;-reduction is simply function application. We apply an abstraction `f x. t` to an argument `y` by replacing all free occurrences of `x` in `t` by `y` [3]. This is &Beta;-reduction. Consider the application on id
 
     (λ x. x) y → y
+    
+We simply "copy" the body of the abstraction, and replace occurrences of the bound variable `x` with `y`. Consider a slightly more complex example:
+
+    (λ n f x. f (n f x)) (λ f x. x) → λ f x. f ((λ f x. x) f x)
+                                    → λ f x. f x
+                                    
+This is the expression `(succ 0)`, as we defined it earlier. We apply &Beta;-reduction twice, first on the outermost abstraction, then on the inner abstraction.
 
 # References
 1. [Lambda Calculus](https://en.wikipedia.org/wiki/Lambda_calculus). Wikipedia: The Free Encyclopedia
