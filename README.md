@@ -140,6 +140,13 @@ We now proceed with &Beta;-reduction.
     (λ f y. f y) (λ f. x) → λ y. (λ f. x) y
                           → λ y. x
                           
+# Eta Conversion
+&eta;-conversion allows us to further eliminate abstractions if they give the same result for any argument [1]. &eta;-conversion allows us to reduce the following expression
+
+    λ x. f x → f
+    
+as long as `x` does not occur free in `f`.
+
 # References
 1. [Lambda Calculus](https://en.wikipedia.org/wiki/Lambda_calculus). Wikipedia: The Free Encyclopedia
 2. Types and Programming Languages. Benjamin C. Pierce
