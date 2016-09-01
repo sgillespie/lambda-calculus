@@ -104,6 +104,19 @@ We simply "copy" the body of the abstraction, and replace occurrences of the bou
                                     
 This is the expression `(succ 0)`, as we defined it earlier. We apply &Beta;-reduction twice, first on the outermost abstraction, then on the inner abstraction.
 
+### Name Conflicts
+If a free variable `x` has the same name as a bound variable, &Beta; reduction breaks down. Consider an example:
+
+    (λ f x. f x) (λ f. x) → λ x. (λ f. x) x
+                          → λ x. x
+                          
+`x` is a free variable the expression above. The abstraction `(λ f x. f x)` binds a variable with the same name. When we apply the abstraction, it pushes a free variable into an inner abstraction and is now bound. To show the desired effect, we can rename some variables:
+
+    (λ f x. f x) (λ g. y) → λ x. (λ g. y) x
+                          → λ x. y
+                          
+We will use alpha conversion to avoid this problem.
+
 # References
 1. [Lambda Calculus](https://en.wikipedia.org/wiki/Lambda_calculus). Wikipedia: The Free Encyclopedia
 2. Types and Programming Languages. Benjamin C. Pierce
