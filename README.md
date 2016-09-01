@@ -109,7 +109,7 @@ This is the expression `(succ 0)`, as shown earlier. We apply &Beta;-reduction t
 
     (λ f x. f x) (λ f. x)
     
-If we blindly use reduce this, we arrive at a wrong result.
+If we blindly reduce this, we arrive at a wrong result.
 
     (λ f x. f x) (λ f. x) → λ x. (λ f. x) x
                           → λ x. x
@@ -121,6 +121,25 @@ The free variable `x` is captured by the abstraction `(λ f x. f x)` where `x` i
                           
 `y` is now the free variable, and is no longer being discarded. We will use Alpha conversion to avoid captures [6].
 
+## Alpha Conversion
+Name captures occur when the free variables of an argument have a parameter of the same name in the body of the abstraction. Using &alpha;-conversion, we change the names of parameter bound by the abstraction [6]. This means that the following expressions are equal.
+
+    (λ x. x)
+    (λ y. y)
+
+Returning to our capture example, we first look for captures.
+
+    (λ f x. f x) (λ f. x)
+    
+Because `x` is free in the argument `(λ f. x)`, we need to use &alpha;-conversion to change the parameter `x` to a unique name.
+
+    (λ f x. f x) (λ f. x) → (λ f y. f y) (λ f. x)
+    
+We now proceed with &Beta;-reduction.
+
+    (λ f y. f y) (λ f. x) → λ y. (λ f. x) y
+                          → λ y. x
+                          
 # References
 1. [Lambda Calculus](https://en.wikipedia.org/wiki/Lambda_calculus). Wikipedia: The Free Encyclopedia
 2. Types and Programming Languages. Benjamin C. Pierce
