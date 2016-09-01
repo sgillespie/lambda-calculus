@@ -93,29 +93,33 @@ There are three conversion rules [6]:
  * Eta conversion
 
 ## Beta Reduction
-&Beta;-reduction is simply function application. We apply an abstraction `f x. t` to an argument `y` by replacing all free occurrences of `x` in `t` by `y` [3]. This is &Beta;-reduction. Consider the application on id
+&Beta;-reduction is function application. We apply an abstraction `f x. t` to an argument `y` by replacing all free occurrences of `x` in `t` by `y` [3]. Consider an application of `id`
 
     (λ x. x) y → y
     
-We simply "copy" the body of the abstraction, and replace occurrences of the bound variable `x` with `y`. Consider a slightly more complex example:
+We simply copy the body of the abstraction, and replace occurrences of the bound variable `x` with `y`. Consider a slightly more complex example:
 
     (λ n f x. f (n f x)) (λ f x. x) → λ f x. f ((λ f x. x) f x)
                                     → λ f x. f x
                                     
-This is the expression `(succ 0)`, as we defined it earlier. We apply &Beta;-reduction twice, first on the outermost abstraction, then on the inner abstraction.
+This is the expression `(succ 0)`, as shown earlier. We apply &Beta;-reduction twice, first on the outermost abstraction, then on the inner abstraction.
 
-### Name Conflicts
-If a free variable `x` has the same name as a bound variable, &Beta; reduction breaks down. Consider an example:
+### Name Capture
+&Beta;-reduction can sometimes produce invalid reductions if great care is not taken. Consider an example where `x` occurs free.
+
+    (λ f x. f x) (λ f. x)
+    
+If we blindly use reduce this, we arrive at a wrong result.
 
     (λ f x. f x) (λ f. x) → λ x. (λ f. x) x
                           → λ x. x
                           
-`x` is a free variable the expression above. The abstraction `(λ f x. f x)` binds a variable with the same name. When we apply the abstraction, it pushes a free variable into an inner abstraction and is now bound. To show the desired effect, we can rename some variables:
+The free variable `x` is captured by the abstraction `(λ f x. f x)` where `x` is bound. To highlight our mistake, we will rename some variables:
 
     (λ f x. f x) (λ g. y) → λ x. (λ g. y) x
                           → λ x. y
                           
-We will use alpha conversion to avoid this problem.
+`y` is now the free variable, and is no longer being discarded. We will use Alpha conversion to avoid captures [6].
 
 # References
 1. [Lambda Calculus](https://en.wikipedia.org/wiki/Lambda_calculus). Wikipedia: The Free Encyclopedia
