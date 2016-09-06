@@ -140,13 +140,38 @@ We now proceed with &Beta;-reduction.
     (λ f y. f y) (λ f. x) → λ y. (λ f. x) y
                           → λ y. x
                           
-# Eta Conversion
+## Eta Conversion
 &eta;-conversion allows us to further eliminate abstractions if they give the same result for any argument [1]. &eta;-conversion allows us to reduce the following expression
 
     λ x. f x → f
     
 as long as `x` does not occur free in `f`.
 
+# More Examples
+We now revisit some extended examples.
+
+## Arithmetic
+We now return to Church Encodings. Recall that Church Encodings is a simple way to encode non-negative integers.
+
+    0: λ f x. x
+    1: λ f x. f x
+    2: λ f x. f (f x)
+    3: λ f x. f (f (f x))
+
+Alternately, these can be defined by two general functions
+
+    zero: λ f x. x
+    succ: λ n f x. f (n f x)
+    
+Addition is defined by
+
+    add: λ m n f x. m f (n f x)
+    
+We begin with a very simple example
+
+    add 1 1 → (λ m n f x. m f (n f x)) (λ f x. f x) (λ f x. f x)
+            → (λ n f x. (λ f x. f x) f (n f x)) (λ f x. f x)
+            → λ f x. (λ f x. f x) f ((λ f x. f x) f x)
 # References
 1. [Lambda Calculus](https://en.wikipedia.org/wiki/Lambda_calculus). Wikipedia: The Free Encyclopedia
 2. Types and Programming Languages. Benjamin C. Pierce
