@@ -158,19 +158,19 @@ We now return to Church Encodings. Recall that Church Encodings are a simple way
     2: λ f x. f (f x)
     3: λ f x. f (f (f x))
 
-Alternately, these can be defined by two general functions
+Again, these can be all be defined inductively
 
     zero: λ f x. x
     succ: λ n f x. f (n f x)
     
-Addition and subtraction are defined in terms of `succ`[1]:
+We now define addition and subtraction [1]:
 
     add: λ m n f x. m f (n f x)
     multiply: λ m n f. m (n f)
     
-For example, consider the expression `2 + 3`. We will solve this using the three &lambda; reduction rules. We begin by expanding using the definitions above
+For example, consider the expression `2 + 3`. We will solve this using the three &lambda; reduction rules. We begin by expanding `add 2 3` with the definitions above
 
-    add 2 3 → (λ m n f x. f (n f x)) (λ f x. f (f x)) (λ f x. f (f (f x)))
+    add 2 3 → (λ m n f x. m f (n f x)) (λ f x. f (f x)) (λ f x. f (f (f x)))
     
 We now apply &Beta;-reduction twice, beginning with the left, outermost application
 
