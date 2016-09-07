@@ -168,9 +168,34 @@ Addition and subtraction are defined in terms of `succ`[1]:
     add: λ m n f x. m f (n f x)
     multiply: λ m n f. m (n f)
     
-For example, consider the expression `2 + 3`. We will solve this using the three &lambda; reduction rules.
+For example, consider the expression `2 + 3`. We will solve this using the three &lambda; reduction rules. We begin by expanding using the definitions above
 
-    add 2 3
+    add 2 3 → (λ m n f x. f (n f x)) (λ f x. f (f x)) (λ f x. f (f (f x)))
+    
+We now apply &Beta;-reduction twice, beginning with the left, outermost application
+
+    → (λ n f x. (λ f x. f (f x)) f (n f x)) (λ f x. f (f (f x)))
+    → λ f x. (λ f x. f (f x)) f ((λ f x. f (f (f x))) f x)
+    
+We will now apply the abstraction `(λ f x. f (f x))` to its first argument, `f`. Notice that `f` is bound by the abstraction, so we must use &alpha;-conversion first
+
+    → λ f x. (λ g x. g (g x)) f ((λ f x. f (f (f x))) f x)
+
+Now that the capture has been resolved, we continue with &Beta;-reduction.
+
+    → λ f x. (λ x. f (f x)) ((λ f x. f (f (f x))) f x)
+    
+Once again, we apply from the left, outermost abstraction, applying `λ x. f (f x)` to the massive argument `λ f x. f (f (f x))) f x`. However, there's another capture, `x`. We &alpha;-convert that, then &Beta;-reduce it again.
+
+    → λ f x. (λ y. f (f y)) ((λ f x. f (f (f x))) f x)
+    → λ f x. (f (f ((λ f x. f (f (f x))) f x)
+    
+We repeat this process until there are no more redexes
+
+    → λ f x. (f (f ((λ g y. g (g (g y))) f x)
+    → λ f x. (f (f (f (f (f x)))))
+    
+From the sequence above, we know this is 5. Since `2 + 3 = 5`, we have arrived at the correct result.
 
 # References
 1. [Lambda Calculus](https://en.wikipedia.org/wiki/Lambda_calculus). Wikipedia: The Free Encyclopedia
