@@ -151,7 +151,7 @@ as long as `x` does not occur free in `f`.
 We now revisit some extended examples.
 
 ## Arithmetic
-We now return to Church Encodings. Recall that Church Encodings is a simple way to encode non-negative integers.
+We now return to Church Encodings. Recall that Church Encodings are a simple way to represent non-negative integers.
 
     0: λ f x. x
     1: λ f x. f x
