@@ -163,15 +163,15 @@ Alternately, these can be defined by two general functions
     zero: λ f x. x
     succ: λ n f x. f (n f x)
     
-Addition is defined by
+Addition and subtraction are defined in terms of `succ`[1]:
 
     add: λ m n f x. m f (n f x)
+    multiply: λ m n f. m (n f)
     
-We begin with a very simple example
+For example, consider the expression `2 + 3`. We will solve this using the three &lambda; reduction rules.
 
-    add 1 1 → (λ m n f x. m f (n f x)) (λ f x. f x) (λ f x. f x)
-            → (λ n f x. (λ f x. f x) f (n f x)) (λ f x. f x)
-            → λ f x. (λ f x. f x) f ((λ f x. f x) f x)
+    add 2 3
+
 # References
 1. [Lambda Calculus](https://en.wikipedia.org/wiki/Lambda_calculus). Wikipedia: The Free Encyclopedia
 2. Types and Programming Languages. Benjamin C. Pierce
