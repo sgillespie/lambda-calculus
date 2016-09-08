@@ -197,6 +197,23 @@ We repeat this process until there are no more redexes
     
 From the sequence above, we know this is 5. Since `2 + 3 = 5`, we have arrived at the correct result.
 
+## Boolean Logic
+We can also encode boolean values. These are called Church Booleans [1]
+
+    true: λ t f. t
+    false: λ t f. f
+    
+The well-known form `if` can composed with functions
+
+    if: λ p x y. p x y
+    
+This takes a boolean `p`, an action to take if `p` is true, `x`, and an action to take if `p` is false, `y`. `If` can be read as if `p` then `x` else `y`.
+
+Finally, we define the boolean operators `and` and `or`.
+
+    and: λ x y. y x y
+    or: λ x y. x x y
+    
 # References
 1. [Lambda Calculus](https://en.wikipedia.org/wiki/Lambda_calculus). Wikipedia: The Free Encyclopedia
 2. Types and Programming Languages. Benjamin C. Pierce
