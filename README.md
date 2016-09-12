@@ -203,19 +203,18 @@ We can also encode boolean values. These are called Church Booleans [1]
     true: λ t f. t
     false: λ t f. f
     
-The well-known form `if` can composed with functions
+An `if` statement can be modeled purely with functions 
 
     if: λ p x y. p x y
     
-This takes a boolean `p`, an action to take if `p` is true, `x`, and an action to take if `p` is false, `y`. `If` can be read as if `p` then `x` else `y`.
+This takes a boolean `p`, an action to take if `p` is true, and an action to take if `p` is false. `If` can be read as if `p` then `x` else `y`.
 
-Finally, we define the boolean operators `and` and `or`.
+For our next example, we will examine the following expression:
 
-    and: λ x y. y x y
-    or: λ x y. x x y
+    λ p. if p 1 0 → λ p. (λ q x y. q x y) p (λ f x. x) (λ f x. x)
     
 # References
-1. [Lambda Calculus](https://en.wikipedia.org/wiki/Lambda_calculus). Wikipedia: The Free Encyclopedia
+1. [Lambda Calculus](https://en.wikipedia.org/wiki/Lambd.a_calculus). Wikipedia: The Free Encyclopedia
 2. Types and Programming Languages. Benjamin C. Pierce
 3. [Simply typed lambda calculus](https://en.wikipedia.org/wiki/Simply_typed_lambda_calculus). Wikipedia: The Free Encyclopedia
 4. [System F](https://en.wikipedia.org/wiki/System_F). Wikipedia: The Free Encyclopedia
