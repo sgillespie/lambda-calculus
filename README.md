@@ -203,7 +203,7 @@ We can also encode boolean values. These are called Church Booleans [1]
     true: λ t f. t
     false: λ t f. f
     
-An `if` statement can be modeled purely with functions 
+An `if` statement can be modeled purely with functions [1]
 
     if: λ p x y. p x y
     
@@ -212,6 +212,20 @@ This takes a boolean `p`, an action to take if `p` is true, and an action to tak
 For our next example, we will examine the following expression:
 
     λ p. if p 1 0 → λ p. (λ q x y. q x y) p (λ f x. x) (λ f x. x)
+    
+This function takes a boolean `p`, and returns `1` if `p` is true, and `0` otherwise. We now apply this to `true`
+
+    (λ p. if p 1 0) true → (λ p. (λ q x y. q x y) p (λ f x. x) (λ f x. x)) (λ t f. t)
+    
+Our first step here is &Beta;-reduction
+
+    → (λ q x y. q x y) (λ t f. t) (λ f x. f x) (λ f x. x) 
+    → (λ x y. (λ t f. t) x y) (λ f x. f x) (λ f x. x)
+    → (λ t f. t) (λ f x. f x) (λ f x. x)
+    → (λ f. (λ f x. f x)) (λ f x. x)
+    → λ f x. f x
+
+As expected, the result is `1`.
     
 # References
 1. [Lambda Calculus](https://en.wikipedia.org/wiki/Lambd.a_calculus). Wikipedia: The Free Encyclopedia
