@@ -211,11 +211,11 @@ This takes a boolean `p`, an action to take if `p` is true, and an action to tak
 
 For our next example, we will examine the following expression:
 
-    λ p. if p 1 0 → λ p. (λ q x y. q x y) p (λ f x. x) (λ f x. x)
+    λ p. if p 1 0 → λ p. (λ q x y. q x y) p (λ f x. f x) (λ f x. x)
     
 This function takes a boolean `p`, and returns `1` if `p` is true, and `0` otherwise. We now apply this to `true`
 
-    (λ p. if p 1 0) true → (λ p. (λ q x y. q x y) p (λ f x. x) (λ f x. x)) (λ t f. t)
+    (λ p. if p 1 0) true → (λ p. (λ q x y. q x y) p (λ f x. f x) (λ f x. x)) (λ t f. t)
     
 Our first step here is &Beta;-reduction
 
