@@ -51,7 +51,7 @@ An abstraction is applied by using the form `f x y z`, where `f` is a lambda abs
 &lambda; scoping rules are similar to lexical scoping [5]. An occurrence of a variable `x` is **bound** when it occurs in the body `t` of an abstraction `λ x. t`. An occurrence of a variable is **free** when it is not bound by an abstraction [2]. For example, in the expression `λ x. x`, `x` is bound by the enclosing abstraction. In the expression `λ y. f y`, `f` occurs free while `y` is bound.
 
 ## Currying
-&lambda; does not include multi-argument functions. Instead, an abstraction can only take one argument [2]. To simulate multi-argument functions, we use functions that return other functions, each taking one argument. We saw an informal example earlier. Let's consider a more concreate example,
+&lambda; does not include multi-argument functions. Instead, an abstraction can only take one argument [2]. To simulate multi-argument functions, we use functions that return other functions, each taking one argument. We saw an informal example earlier. Let's consider a more concrete example,
 
     λf. (λx. f x)
     
