@@ -73,7 +73,7 @@ Natural numbers can be achieved by using what we call Church Numerals [1].
     2: λ f x. f (f x)
     3: λ f x. f (f (f x))
 
-Any number `n` is achieved by applying it's first argument, `f`, `n` times, to its second argument, `x`. We can generalize this to two functions
+Any number `n` is achieved by applying its first argument, `f`, `n` times, to its second argument, `x`. We can generalize this to two functions
 
     zero: λ f x. x
     succ: λ n f x. f (n f x)
