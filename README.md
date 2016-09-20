@@ -22,7 +22,7 @@ Pure &lambda; is also quite restrictive. You will not find features such as top-
  * Lambda abstraction
  * Function application
  
-Any expression maybe be parenthesized in order to change the evaluation order. Expressions are evaluated from left to right [6].
+Any expression may be parenthesized in order to change the evaluation order. Expressions are evaluated from left to right [6].
  
 ## Variables
 A variable is just a name that may hold a value [2], just as you would expect. In &lambda;, we typically use the convention of a single lower case letter. For example: `x`, `y`, and `z` are all valid variables.
