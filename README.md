@@ -22,7 +22,7 @@ Pure &lambda; is also quite restrictive. You will not find features such as top-
  * Lambda abstraction
  * Function application
  
-Any expression maybe be parenthesized in order to change the evaluation order. Expressions are evaluated from left to right [6].
+Any expression may be parenthesized in order to change the evaluation order. Expressions are evaluated from left to right [6].
  
 ## Variables
 A variable is just a name that may hold a value [2], just as you would expect. In &lambda;, we typically use the convention of a single lower case letter. For example: `x`, `y`, and `z` are all valid variables.
@@ -51,7 +51,7 @@ An abstraction is applied by using the form `f x y z`, where `f` is a lambda abs
 &lambda; scoping rules are similar to lexical scoping [5]. An occurrence of a variable `x` is **bound** when it occurs in the body `t` of an abstraction `λ x. t`. An occurrence of a variable is **free** when it is not bound by an abstraction [2]. For example, in the expression `λ x. x`, `x` is bound by the enclosing abstraction. In the expression `λ y. f y`, `f` occurs free while `y` is bound.
 
 ## Currying
-&lambda; does not include multi-argument functions. Instead, an abstraction can only take one argument [2]. To simulate multi-argument functions, we use functions that return other functions, each taking one argument. We saw an informal example earlier. Let's consider a more concreate example,
+&lambda; does not include multi-argument functions. Instead, an abstraction can only take one argument [2]. To simulate multi-argument functions, we use functions that return other functions, each taking one argument. We saw an informal example earlier. Let's consider a more concrete example,
 
     λf. (λx. f x)
     
@@ -73,12 +73,12 @@ Natural numbers can be achieved by using what we call Church Numerals [1].
     2: λ f x. f (f x)
     3: λ f x. f (f (f x))
 
-Any number `n` is achieved by applying it's first argument, `f`, `n` times, to its second argument, `x`. We can generalize this to two functions
+Any number `n` is achieved by applying its first argument, `f`, `n` times, to its second argument, `x`. We can generalize this to two functions
 
     zero: λ f x. x
     succ: λ n f x. f (n f x)
    
-We have defined natural numbers inductively, using two cases. Zero is defined exactly as we did earlier, and it's successor, as n + 1. Every natural can be composed using those two functions. For example, we can achieve the number 2, by using only zero and successor.
+We have defined natural numbers inductively, using two cases. Zero is defined exactly as we did earlier, and its successor, as n + 1. Every natural can be composed using those two functions. For example, we can achieve the number 2, by using only zero and successor.
 
     2 = succ (succ zero) 
       = (λ n f x. f (n f x)) ((λ n f x. f (n f x)) λ f x. x) 
