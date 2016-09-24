@@ -1,6 +1,8 @@
 module Language.Lambda (
   LambdaExpr(..),
-  parseExpr) where
+  Outputtable(..),
+  parseExpr,
+  ) where
 
 import Language.Lambda.Expression
 import Language.Lambda.Parser
