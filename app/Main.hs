@@ -4,6 +4,8 @@ import System.Console.Shell
 import System.Console.Shell.ShellMonad
 import System.Console.Shell.Backend.Readline (readlineBackend)
 
+import Language.Lambda.Parser
+
 main :: IO ()
 main = runShell mkShellDesc readlineBackend ()
 
@@ -25,7 +27,9 @@ commands = [exitCommand "q",
             helpCommand "h"]
 
 eval :: String -> Sh st ()
-eval = shellPutStrLn
+eval = eval' . parseExpr
+  where eval' (Left err) = shellPutErrLn . show $ err
+        eval' (Right expr) = shellPutStrLn . show $ expr
 
 version :: String
 version = "0.1.0"
