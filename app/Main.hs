@@ -4,8 +4,7 @@ import System.Console.Shell
 import System.Console.Shell.ShellMonad
 import System.Console.Shell.Backend.Readline (readlineBackend)
 
-import Language.Lambda.Expression
-import Language.Lambda.Parser
+import Language.Lambda
 
 main :: IO ()
 main = runShell mkShellDesc readlineBackend ()

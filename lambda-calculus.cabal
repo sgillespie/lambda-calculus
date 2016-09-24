@@ -15,7 +15,8 @@ cabal-version:       >=1.10
 
 library
   hs-source-dirs:      src
-  exposed-modules:     Language.Lambda.Expression,
+  exposed-modules:     Language.Lambda,
+                       Language.Lambda.Expression,
                        Language.Lambda.Parser
   build-depends:       base >= 4.7 && < 5,
                        parsec
@@ -35,6 +36,7 @@ test-suite lambda-calculus-test
   type:                exitcode-stdio-1.0
   hs-source-dirs:      test
   main-is:             Spec.hs
+  other-modules:       Language.Lambda.ParserSpec
   build-depends:       base,
                        lambda-calculus,
                        hspec,
