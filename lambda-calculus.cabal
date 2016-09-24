@@ -15,8 +15,7 @@ cabal-version:       >=1.10
 
 library
   hs-source-dirs:      src
-  exposed-modules:     Data.String.Strip,
-                       Language.Lambda.Expression,
+  exposed-modules:     Language.Lambda.Expression,
                        Language.Lambda.Parser
   build-depends:       base >= 4.7 && < 5,
                        parsec

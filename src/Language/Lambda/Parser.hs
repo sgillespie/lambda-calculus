@@ -20,6 +20,6 @@ identifier = lexeme $ (:) <$> first <*> many rest
         rest  = first <|> digit
 
 lexeme :: Parser a -> Parser a
-lexeme = (flip (<*)) . many whitespace
+lexeme = (flip (<*)) . many $ whitespace
   where whitespace :: Parser Char
         whitespace = space <|> tab
