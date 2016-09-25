@@ -12,7 +12,7 @@ spec = do
       prettyPrint (Var "x") `shouldBe` "x"
 
     it "prints simple abstractions" $ do
-      prettyPrint (Abs "x" (Var "x")) `shouldBe` "\\x. x"
+      prettyPrint (Abs "x" (Var "x")) `shouldBe` "λx. x"
 
     it "prints simple applications" $ do
       prettyPrint (App (Var "a") (Var "b"))
@@ -20,7 +20,7 @@ spec = do
 
     it "prints nested applications" $ do
       prettyPrint (Abs "f" (Abs "x" (Var"x")))
-        `shouldBe` "\\f x. x"
+        `shouldBe` "λf x. x"
 
     it "prints nested applications" $ do
       prettyPrint (App (App (Var "f") (Var "x")) (Var "y"))
@@ -31,8 +31,10 @@ spec = do
         `shouldBe` "f (x y)"
 
       prettyPrint (App (Abs "x" (Var "x")) (Var "y"))
-        `shouldBe` "(\\x. x) y"
+        `shouldBe` "(λx. x) y"
 
       prettyPrint (App (Var "x") (Abs "f" (Var "f")))
-        `shouldBe` "x (\\f. f)"
+        `shouldBe` "x (λf. f)"
       
+      prettyPrint (App (Abs "f" (Var "f")) (Abs "g" (Var "g")))
+        `shouldBe` "(λf. f) (λg. g)"

@@ -24,7 +24,7 @@ pprExpr pdoc (App e1 e2)  = pprApp pdoc e1 e2
 -- Pretty print an abstraction 
 pprAbs :: PrettyPrint n => PDoc String -> n -> LambdaExpr n -> PDoc String
 pprAbs pdoc n body
-  = between vars' "\\" ". " (pprExpr pdoc body')
+  = between vars' [lambda] ". " (pprExpr pdoc body')
   where (vars, body') = uncurry n body
         vars' = intercalate (map prettyPrint vars) " " empty
 
@@ -34,6 +34,8 @@ pprApp :: PrettyPrint n
         -> LambdaExpr n
         -> LambdaExpr n
         -> PDoc String
+pprApp pdoc e1@(Abs _ _) e2@(Abs _ _) = betweenParens (pprExpr pdoc e1) pdoc
+  `mappend` addSpace (betweenParens (pprExpr pdoc e2) pdoc)
 pprApp pdoc e1 e2@(App _ _) = pprExpr pdoc e1
   `mappend` addSpace (betweenParens (pprExpr pdoc e2) pdoc)
 pprApp pdoc e1 e2@(Abs _ _) = pprExpr pdoc e1

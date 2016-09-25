@@ -45,3 +45,6 @@ addSpace = add [space]
   
 space :: Char
 space = ' '
+
+lambda :: Char
+lambda = 'λ'
