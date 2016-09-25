@@ -3,33 +3,36 @@ module Language.Lambda.ExpressionSpec where
 import Test.Hspec
 
 import Language.Lambda.Expression
+import Language.Lambda.PrettyPrint
 
 spec :: Spec
 spec = do
-  describe "ppr" $ do
+  describe "prettyPrint" $ do
     it "prints simple variables" $ do
-      ppr (Var "x") `shouldBe` "x"
+      prettyPrint (Var "x") `shouldBe` "x"
 
     it "prints simple abstractions" $ do
-      ppr (Abs "x" (Var "x")) `shouldBe` "\\x. x"
+      prettyPrint (Abs "x" (Var "x")) `shouldBe` "\\x. x"
 
     it "prints simple applications" $ do
-      ppr (App (Var "f") (Var "x")) `shouldBe` "f x"
+      prettyPrint (App (Var "a") (Var "b"))
+        `shouldBe` "a b"
 
-    it "prints nested abstractions" $ do
-      ppr (Abs "f" (Abs "x" (Var "x")))
+    it "prints nested applications" $ do
+      prettyPrint (Abs "f" (Abs "x" (Var"x")))
         `shouldBe` "\\f x. x"
 
     it "prints nested applications" $ do
-      ppr (App (App (Var "f") (Var "x")) (Var "y"))
+      prettyPrint (App (App (Var "f") (Var "x")) (Var "y"))
         `shouldBe` "f x y"
 
     it "prints parenthesized applications" $ do
-      ppr (App (Var "f") (App (Var "x") (Var "y")))
+      prettyPrint (App (Var "f") (App (Var "x") (Var "y")))
         `shouldBe` "f (x y)"
 
-      ppr (App (Abs "x" (Var "x")) (Var "y"))
+      prettyPrint (App (Abs "x" (Var "x")) (Var "y"))
         `shouldBe` "(\\x. x) y"
 
-      ppr (App (Var "x") (Abs "f" (Var "f")))
+      prettyPrint (App (Var "x") (Abs "f" (Var "f")))
         `shouldBe` "x (\\f. f)"
+      

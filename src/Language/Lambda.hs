@@ -1,8 +1,9 @@
 module Language.Lambda (
   LambdaExpr(..),
-  Outputtable(..),
-  parseExpr,
+  PrettyPrint(..),
+  parseExpr
   ) where
 
 import Language.Lambda.Expression
 import Language.Lambda.Parser
+import Language.Lambda.PrettyPrint

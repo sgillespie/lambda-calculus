@@ -31,8 +31,8 @@ eval = either shellPutErrLn' shellPutStrLn' . parseExpr
   where shellPutErrLn' :: Show s => s -> Sh s' ()
         shellPutErrLn' = shellPutErrLn . show
 
-        shellPutStrLn' :: Outputtable s => s -> Sh s' ()
-        shellPutStrLn' = shellPutStrLn . ppr
+        shellPutStrLn' :: PrettyPrint s => s -> Sh s' ()
+        shellPutStrLn' = shellPutStrLn . prettyPrint
 
 version :: String
 version = "0.1.0"

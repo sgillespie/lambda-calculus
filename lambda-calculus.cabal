@@ -17,7 +17,8 @@ library
   hs-source-dirs:      src
   exposed-modules:     Language.Lambda,
                        Language.Lambda.Expression,
-                       Language.Lambda.Parser
+                       Language.Lambda.Parser,
+                       Language.Lambda.PrettyPrint
   build-depends:       base >= 4.7 && < 5,
                        parsec
   default-language:    Haskell2010
@@ -37,7 +38,8 @@ test-suite lambda-calculus-test
   hs-source-dirs:      test
   main-is:             Spec.hs
   other-modules:       Language.Lambda.ExpressionSpec,
-                       Language.Lambda.ParserSpec
+                       Language.Lambda.ParserSpec,
+                       Language.Lambda.PrettyPrintSpec
   build-depends:       base,
                        lambda-calculus,
                        hspec,
