@@ -1,10 +1,13 @@
 module Main where
 
+import Data.Version
+
 import System.Console.Shell
 import System.Console.Shell.ShellMonad
 import System.Console.Shell.Backend.Readline (readlineBackend)
 
 import Language.Lambda
+import Paths_lambda_calculus
 
 main :: IO ()
 main = runShell mkShellDesc readlineBackend ()
@@ -17,7 +20,7 @@ mkShellDesc = shellDesc' $ mkShellDescription commands eval
           }
 
 shellGreeting :: String
-shellGreeting = "Lambda Calculus (" ++ version ++ ")\nType :h for help\n"
+shellGreeting = "Lambda Calculus (" ++ version' ++ ")\nType :h for help\n"
   
 shellPrompt :: s -> IO String
 shellPrompt _ = return "λ > "
@@ -34,6 +37,6 @@ eval = either shellPutErrLn' shellPutStrLn' . parseExpr
         shellPutStrLn' :: PrettyPrint s => s -> Sh s' ()
         shellPutStrLn' = shellPutStrLn . prettyPrint
 
-version :: String
-version = "0.1.0"
+version' :: String
+version' = showVersion version
  

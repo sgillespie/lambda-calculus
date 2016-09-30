@@ -1,5 +1,5 @@
 name:                lambda-calculus
-version:             0.1.0
+version:             0.2.0
 synopsis:            A lambda calculus interpreter
 description:         Please see README.md
 homepage:            https://github.com/githubuser/lambda-calculus#readme
@@ -26,6 +26,7 @@ library
 executable lambda-calculus
   hs-source-dirs:      app
   main-is:             Main.hs
+  other-modules:       Paths_lambda_calculus
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
   build-depends:       base,
                        lambda-calculus,
