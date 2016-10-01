@@ -28,3 +28,7 @@ spec = do
           e2 = Var "y"
       betaReduce e1 e2 `shouldBe` App (Var "x") (Var "y")
       
+    it "does not sub shadowed bindings" $ do
+      let e1 = Abs "x" (Abs "x" (Var "x"))
+          e2 = Var "z"
+      betaReduce e1 e2 `shouldBe` Abs "x" (Var "x")
