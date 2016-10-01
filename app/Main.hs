@@ -30,7 +30,7 @@ commands = [exitCommand "q",
             helpCommand "h"]
 
 eval :: String -> Sh s ()
-eval = either shellPutErrLn' shellPutStrLn' . parseExpr
+eval = either shellPutErrLn' shellPutStrLn' . evalString
   where shellPutErrLn' :: Show s => s -> Sh s' ()
         shellPutErrLn' = shellPutErrLn . show
 

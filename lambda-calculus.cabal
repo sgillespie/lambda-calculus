@@ -39,7 +39,8 @@ test-suite lambda-calculus-test
   type:                exitcode-stdio-1.0
   hs-source-dirs:      test
   main-is:             Spec.hs
-  other-modules:       Language.Lambda.ExpressionSpec,
+  other-modules:       Language.LambdaSpec,
+                       Language.Lambda.ExpressionSpec,
                        Language.Lambda.EvalSpec,
                        Language.Lambda.ParserSpec,
                        Language.Lambda.PrettyPrintSpec
