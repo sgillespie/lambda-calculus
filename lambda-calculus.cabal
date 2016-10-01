@@ -17,6 +17,7 @@ library
   hs-source-dirs:      src
   exposed-modules:     Language.Lambda,
                        Language.Lambda.Expression,
+                       Language.Lambda.Eval,
                        Language.Lambda.Parser,
                        Language.Lambda.PrettyPrint
   build-depends:       base >= 4.7 && < 5,
@@ -39,6 +40,7 @@ test-suite lambda-calculus-test
   hs-source-dirs:      test
   main-is:             Spec.hs
   other-modules:       Language.Lambda.ExpressionSpec,
+                       Language.Lambda.EvalSpec,
                        Language.Lambda.ParserSpec,
                        Language.Lambda.PrettyPrintSpec
   build-depends:       base,
