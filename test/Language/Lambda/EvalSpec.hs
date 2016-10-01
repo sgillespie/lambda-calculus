@@ -8,9 +8,13 @@ import Language.Lambda.Expression
 spec :: Spec
 spec = do
   describe "evalExpr" $ do
-    it "Beta reduces" $ do
+    it "beta reduces" $ do
       let expr = App (Abs "x" (Var "x")) (Var "z")
       evalExpr expr `shouldBe` Var "z"
+
+    it "beta reduces multiple applications" $ do
+      let expr = App (App (Abs "a" (Abs "b" (Var "b"))) (Var "x")) (Var "y")
+      evalExpr expr `shouldBe` Var "y"
 
   describe "betaReduce" $ do
     it "reduces simple applications" $ do
