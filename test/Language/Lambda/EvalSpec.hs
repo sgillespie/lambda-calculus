@@ -36,3 +36,16 @@ spec = do
       let e1 = Abs "x" (Abs "x" (Var "x"))
           e2 = Var "z"
       betaReduce e1 e2 `shouldBe` Abs "x" (Var "x")
+
+  describe "alphaConvert" $ do
+    it "alpha converts simple expressions" $ do
+      let freeVars = ["x"]
+          expr = Abs "x" (Var "x")
+          uniques = ["y"]
+      alphaConvert uniques freeVars expr `shouldBe` Abs "y" (Var "y")
+  
+    it "avoids captures" $ do
+      let freeVars = ["x"]
+          expr = Abs "x" (Var "x")
+          uniques = ["x", "y"]
+      alphaConvert uniques freeVars expr `shouldBe` Abs "y" (Var "y")
