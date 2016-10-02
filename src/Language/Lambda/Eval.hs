@@ -28,4 +28,5 @@ sub name b@(Var name') expr | name == name' = expr
 sub name b@(Abs name' expr') expr | name == name' = b
   | otherwise = Abs name' (sub name expr' expr)
 
-sub _ body _ = body
+sub name (App e1 e2) expr = App (sub name e1 expr)
+                                (sub name e2 expr)

@@ -27,6 +27,11 @@ spec = do
           e2 = Var "z"
       betaReduce e1 e2 `shouldBe` Abs "y" (Var "z")
 
+    it "reduces inner applications" $ do
+      let e1 = Abs "f" (App (Var "f") (Var "x"))
+          e2 = Var "g"
+      betaReduce e1 e2 `shouldBe` App (Var "g") (Var "x")
+
     it "does not reduce unreducible expression" $ do
       let e1 = Var "x"
           e2 = Var "y"
@@ -36,6 +41,7 @@ spec = do
       let e1 = Abs "x" (Abs "x" (Var "x"))
           e2 = Var "z"
       betaReduce e1 e2 `shouldBe` Abs "x" (Var "x")
+
 
   describe "alphaConvert" $ do
     it "alpha converts simple expressions" $ do
