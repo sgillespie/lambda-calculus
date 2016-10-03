@@ -13,8 +13,8 @@ spec = do
       evalExpr expr `shouldBe` Var "z"
 
     it "beta reduces multiple applications" $ do
-      let expr = App (App (Abs "a" (Abs "b" (Var "b"))) (Var "x")) (Var "y")
-      evalExpr expr `shouldBe` Var "y"
+      let expr = App (App (Abs "f" (Abs "x" (App (Var "f") (Var "x")))) (Var "g")) (Var "y")
+      evalExpr expr `shouldBe` App (Var "g") (Var "y")
 
   describe "betaReduce" $ do
     it "reduces simple applications" $ do
@@ -36,7 +36,12 @@ spec = do
       let e1 = Var "x"
           e2 = Var "y"
       betaReduce e1 e2 `shouldBe` App (Var "x") (Var "y")
-      
+
+    it "does not reduce irreducible chained applications" $ do
+      let e1 = App (Var "x") (Var "y")
+          e2 = Var "z"
+      betaReduce e1 e2 `shouldBe` App (App (Var "x") (Var "y")) (Var "z")
+
     it "does not sub shadowed bindings" $ do
       let e1 = Abs "x" (Abs "x" (Var "x"))
           e2 = Var "z"

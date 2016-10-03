@@ -6,13 +6,13 @@ import Data.Maybe
 import Language.Lambda.Expression
 
 evalExpr :: Eq n => LambdaExpr n -> LambdaExpr n
-evalExpr (App e1 e2) = betaReduce e1 e2
-evalExpr e           = e
+evalExpr (App e1 e2) = betaReduce (evalExpr e1) (evalExpr e2)
+evalExpr e = e
 
 betaReduce :: Eq n => LambdaExpr n -> LambdaExpr n -> LambdaExpr n
-betaReduce (Abs n e1) e2 = sub n e1 e2
-betaReduce (App e1 e1') e2 = betaReduce (betaReduce e1 e1') e2
-betaReduce e1 e2 = App e1 e2
+betaReduce (Abs n expr) e2 = sub n expr e2
+betaReduce (App e1 e1') e2 = App (betaReduce e1 e1') e2
+betaReduce expr@(Var _) e2 = App expr e2
 
 alphaConvert :: Eq n => [n] -> [n] -> LambdaExpr n -> LambdaExpr n
 alphaConvert uniqs freeVars expr@(Abs name body)
