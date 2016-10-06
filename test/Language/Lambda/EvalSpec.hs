@@ -12,9 +12,13 @@ spec = do
       let expr = App (Abs "x" (Var "x")) (Var "z")
       evalExpr expr `shouldBe` Var "z"
 
-    it "beta reduces multiple applications" $ do
+    it "reduces multiple applications" $ do
       let expr = App (App (Abs "f" (Abs "x" (App (Var "f") (Var "x")))) (Var "g")) (Var "y")
       evalExpr expr `shouldBe` App (Var "g") (Var "y")
+
+    it "reduces inner redexes" $ do
+      let expr = Abs "x" (App (Abs "y" (Var "y")) (Var "x"))
+      evalExpr expr `shouldBe` Abs "x" (Var "x")
 
   describe "betaReduce" $ do
     it "reduces simple applications" $ do

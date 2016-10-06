@@ -7,11 +7,12 @@ import Language.Lambda.Expression
 
 evalExpr :: Eq n => LambdaExpr n -> LambdaExpr n
 evalExpr (App e1@(Var _) e2) = betaReduce e1 (evalExpr e2)
-evalExpr (App e1         e2) = betaReduce (evalExpr e1) e2
+evalExpr (App e1         e2) = betaReduce (evalExpr e1)  e2
+evalExpr (Abs name expr)     = Abs name (evalExpr expr)
 evalExpr e = e
 
 betaReduce :: Eq n => LambdaExpr n -> LambdaExpr n -> LambdaExpr n
-betaReduce (Abs n expr) = sub n expr
+betaReduce (Abs n expr) = evalExpr . sub n expr
 betaReduce (App e1 e1') = App . betaReduce e1 $ e1'
 betaReduce expr@(Var _) = App expr
 
