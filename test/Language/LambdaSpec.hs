@@ -16,5 +16,4 @@ spec = do
       evalString "(\\x .x) y" `shouldBe` Right (Var "y")
 
     it "reduces applications with nested redexes" $ do
-      evalString "(\\f x. f x) (\\y. y)"
-        `shouldBe` Right (Abs "x" (Var "x"))
+      evalString "(\\f x. f x) (\\y. y)" `shouldBe` Right (Abs "x" (Var "x"))
