@@ -8,27 +8,29 @@ import Language.Lambda.Expression
 spec :: Spec
 spec = do
   describe "evalExpr" $ do
+    let evalExpr' = evalExpr []
+    
     it "beta reduces" $ do
       let expr = App (Abs "x" (Var "x")) (Var "z")
-      evalExpr expr `shouldBe` Var "z"
+      evalExpr' expr `shouldBe` Var "z"
 
     it "reduces multiple applications" $ do
       let expr = App (App (Abs "f" (Abs "x" (App (Var "f") (Var "x")))) (Var "g")) (Var "y")
-      evalExpr expr `shouldBe` App (Var "g") (Var "y")
+      evalExpr' expr `shouldBe` App (Var "g") (Var "y")
 
     it "reduces inner redexes" $ do
       let expr = Abs "x" (App (Abs "y" (Var "y")) (Var "x"))
-      evalExpr expr `shouldBe` Abs "x" (Var "x")
+      evalExpr' expr `shouldBe` Abs "x" (Var "x")
 
     it "reduces with name captures" $ do
       pending
       
       let expr = App (Abs "f" (Abs "x" (App (Var "f") (Var "x"))))
                      (Abs "f" (Var "x"))
-      evalExpr expr `shouldBe` Abs "y" (Var "x")
+      evalExpr' expr `shouldBe` Abs "y" (Var "x")
 
   describe "betaReduce" $ do
-    let betaReduce' = betaReduce [] []
+    let betaReduce' = betaReduce []
     
     it "reduces simple applications" $ do
       let e1 = Abs "x" (Var "x")

@@ -5,28 +5,21 @@ import Data.Maybe
 
 import Language.Lambda.Expression
 
-evalExpr :: Eq n => LambdaExpr n -> LambdaExpr n
-evalExpr expr = evalExpr' [] [] expr
+evalExpr :: Eq n => [n] -> LambdaExpr n -> LambdaExpr n
+evalExpr uniqs (App e1   e2)   = betaReduce uniqs (evalExpr uniqs e1)
+                                                  (evalExpr uniqs e2)
+evalExpr uniqs (Abs name expr) = Abs name . evalExpr uniqs $ expr
+evalExpr _ e = e
 
-evalExpr' :: Eq n => [n] -> [n] -> LambdaExpr n -> LambdaExpr n
-evalExpr' uniqs fvs (App e1@(Var _) e2)
-  = betaReduce uniqs fvs e1 (evalExpr' uniqs fvs e2)
-evalExpr' uniqs fvs (App e1         e2)
-  = betaReduce uniqs fvs (evalExpr' uniqs fvs e1)  e2
-evalExpr' uniqs fvs (Abs name expr)
-  = Abs name (evalExpr' uniqs fvs expr)
-evalExpr' _ _ e = e
-
-betaReduce :: Eq n => [n] -> [n]
-           -> LambdaExpr n -> LambdaExpr n -> LambdaExpr n
-betaReduce uniqs fvs (Abs n expr) = evalExpr' uniqs fvs . sub n expr
-betaReduce uniqs fvs (App e1 e1') = App . betaReduce uniqs fvs e1 $ e1'
-betaReduce _ _ expr@(Var _) = App expr
+betaReduce :: Eq n => [n] -> LambdaExpr n -> LambdaExpr n -> LambdaExpr n
+betaReduce uniqs (Abs n expr) = evalExpr uniqs . sub n expr
+betaReduce uniqs (App e1 e1') = App . betaReduce uniqs e1 $ e1'
+betaReduce _     expr@(Var _) = App expr
 
 alphaConvert :: Eq n => [n] -> [n] -> LambdaExpr n -> LambdaExpr n
 alphaConvert uniqs freeVars expr@(Abs name body)
-  | name `elem` freeVars = Abs uniq (sub name body (Var uniq))
-  | otherwise = expr
+  | name `elem` freeVars = Abs uniq . sub name body . Var $ uniq
+  | otherwise            = expr
   where uniq = fromMaybe name (find (`notElem` freeVars) uniqs)
 alphaConvert _ _ e = e
 

@@ -15,5 +15,7 @@ import Language.Lambda.Parser
 import Language.Lambda.PrettyPrint
 
 evalString :: String -> Either ParseError (LambdaExpr String)
-evalString = liftM evalExpr . parseExpr
+evalString = liftM (evalExpr uniques) . parseExpr
 
+uniques :: [String]
+uniques = map (:[]) ['z'..'a']
