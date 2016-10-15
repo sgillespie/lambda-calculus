@@ -3,7 +3,8 @@ module Language.Lambda (
   PrettyPrint(..),
   evalExpr,
   evalString,
-  parseExpr
+  parseExpr,
+  uniques,
   ) where
 
 import Control.Monad
@@ -18,4 +19,4 @@ evalString :: String -> Either ParseError (LambdaExpr String)
 evalString = liftM (evalExpr uniques) . parseExpr
 
 uniques :: [String]
-uniques = map (:[]) ['z'..'a']
+uniques = map (:[]) . reverse $ ['a'..'z']
