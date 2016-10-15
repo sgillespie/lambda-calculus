@@ -2,13 +2,14 @@ module Language.Lambda.EvalSpec where
 
 import Test.Hspec
 
+import Language.Lambda
 import Language.Lambda.Eval
 import Language.Lambda.Expression
 
 spec :: Spec
 spec = do
   describe "evalExpr" $ do
-    let evalExpr' = evalExpr []
+    let evalExpr' = evalExpr uniques
     
     it "beta reduces" $ do
       let expr = App (Abs "x" (Var "x")) (Var "z")
@@ -23,11 +24,9 @@ spec = do
       evalExpr' expr `shouldBe` Abs "x" (Var "x")
 
     it "reduces with name captures" $ do
-      pending
-      
       let expr = App (Abs "f" (Abs "x" (App (Var "f") (Var "x"))))
                      (Abs "f" (Var "x"))
-      evalExpr' expr `shouldBe` Abs "y" (Var "x")
+      evalExpr' expr `shouldBe` Abs "z" (Var "x")
 
   describe "betaReduce" $ do
     let betaReduce' = betaReduce []

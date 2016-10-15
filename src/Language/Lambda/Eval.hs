@@ -6,26 +6,29 @@ import Data.Maybe
 import Language.Lambda.Expression
 
 evalExpr :: Eq n => [n] -> LambdaExpr n -> LambdaExpr n
+evalExpr uniqs (Abs name expr) = Abs name . evalExpr uniqs $ expr
+evalExpr _     expr@(Var _)    = expr
 evalExpr uniqs (App e1   e2)   = betaReduce uniqs (evalExpr uniqs e1)
                                                   (evalExpr uniqs e2)
-evalExpr uniqs (Abs name expr) = Abs name . evalExpr uniqs $ expr
-evalExpr _ e = e
 
 betaReduce :: Eq n => [n] -> LambdaExpr n -> LambdaExpr n -> LambdaExpr n
-betaReduce uniqs (Abs n expr) = evalExpr uniqs . sub n expr
-betaReduce uniqs (App e1 e1') = App . betaReduce uniqs e1 $ e1'
-betaReduce _     expr@(Var _) = App expr
+betaReduce uniqs (App e1 e1') e2 = App (betaReduce uniqs e1 e1') e2
+betaReduce _     expr@(Var _) e2 = App expr e2
+betaReduce uniqs (Abs n  e1)  e2 = evalExpr uniqs . sub n e1' $ e2
+  where fvs = freeVarsOf e2
+        e1' = alphaConvert uniqs fvs e1
 
 alphaConvert :: Eq n => [n] -> [n] -> LambdaExpr n -> LambdaExpr n
-alphaConvert uniqs freeVars expr@(Abs name body)
+alphaConvert uniqs freeVars (Abs name body)
   | name `elem` freeVars = Abs uniq . sub name body . Var $ uniq
-  | otherwise            = expr
+  | otherwise            = Abs name . alphaConvert uniqs freeVars $ body
   where uniq = fromMaybe name (find (`notElem` freeVars) uniqs)
 alphaConvert _ _ e = e
 
 sub :: Eq n => n -> LambdaExpr n -> LambdaExpr n -> LambdaExpr n
-sub name b@(Var name') expr | name == name' = expr
-                            | otherwise = b
+sub name b@(Var name') expr
+  | name == name' = expr
+  | otherwise     = b
 
 sub name b@(Abs name' expr') expr
   | name == name' = b
