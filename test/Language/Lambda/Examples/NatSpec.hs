@@ -96,3 +96,11 @@ spec = do
       it "power 2 3 = 8" $ do
         "(\\m n f x. (n m) f x) (\\f x. f (f x)) (\\f x. f (f (f x)))"
           `shouldEvalTo` "\\f x. f (f (f (f (f (f (f (f x)))))))"
+
+      it "power n 0 = 1" $ do
+        "(\\m n f x. (n m) f x) n (\\f x. x)"
+          `shouldEvalTo` "\\f x. f x"
+
+      it "power n 1 = n" $ do
+        "(\\m n f x. (n m) f x) n (\\f x. f x)"
+          `shouldEvalTo` "\\f x. n f x"
