@@ -8,7 +8,7 @@ implementing functional programming languages.
 # Introduction to Lambda Calculus
 An introduction to Lambda Calculus is provided. The tutorial can be found at
 
-[docs/lambda-calculus.md](docs/lambda-calculus.md)
+[doc/lambda-calculus.md](doc/lambda-calculus.md)
 
 ## Extended Examples
 More examples can be found in the test-suite, located at
