@@ -65,7 +65,7 @@ In order to run the testsuite, run
     stack test
     
 # Author
-**Sean Gillespie** [sean@mistersg.net](sean@mistersg.net)
+**Sean Gillespie** [sean@mistersg.net](mailto:sean@mistersg.net)
 
 # License
 This project is licensed under the MIT License. See [LICENSE](LICENSE)
