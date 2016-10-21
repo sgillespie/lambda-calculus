@@ -2,10 +2,7 @@ module Language.Lambda.Examples.BoolSpec where
 
 import Test.Hspec
 
-import Language.Lambda
-
-shouldEvalTo :: String -> String -> Expectation
-shouldEvalTo s1 = shouldBe (evalString s1) . evalString
+import Language.Lambda.HspecUtils
 
 spec :: Spec
 spec = do

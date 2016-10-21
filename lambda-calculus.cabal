@@ -40,8 +40,11 @@ test-suite lambda-calculus-test
   hs-source-dirs:      test
   main-is:             Spec.hs
   other-modules:       Language.LambdaSpec,
+                       Language.Lambda.Examples.BoolSpec,
+                       Language.Lambda.Examples.NatSpec,
                        Language.Lambda.ExpressionSpec,
                        Language.Lambda.EvalSpec,
+                       Language.Lambda.HspecUtils,
                        Language.Lambda.ParserSpec,
                        Language.Lambda.PrettyPrintSpec
   build-depends:       base,
