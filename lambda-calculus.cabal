@@ -42,6 +42,7 @@ test-suite lambda-calculus-test
   other-modules:       Language.LambdaSpec,
                        Language.Lambda.Examples.BoolSpec,
                        Language.Lambda.Examples.NatSpec,
+                       Language.Lambda.Examples.PairSpec,
                        Language.Lambda.ExpressionSpec,
                        Language.Lambda.EvalSpec,
                        Language.Lambda.HspecUtils,
