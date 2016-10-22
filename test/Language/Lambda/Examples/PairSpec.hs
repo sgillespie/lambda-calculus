@@ -11,7 +11,7 @@ spec = do
     -- again are represented using Church Encodings:
     --
     -- pair = \x y f. f x y
-    describe "first" $do
+    describe "first" $ do
       -- The function first returns the first item in a pair
       -- first(x, y) = x
       --
