@@ -17,3 +17,14 @@ spec = do
 
     it "reduces applications with nested redexes" $ do
       evalString "(\\f x. f x) (\\y. y)" `shouldBe` Right (Abs "x" (Var "x"))
+
+  describe "uniques" $ do
+    let alphabet = reverse ['a'..'z']
+        len = length alphabet
+    
+    it "starts with plain alphabet" $ do
+      take len uniques `shouldBe` map (:[]) alphabet
+
+    it "adds index afterwards" $ do
+      take len (drop len uniques) `shouldBe` map (:['0']) alphabet
+

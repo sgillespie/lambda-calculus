@@ -36,3 +36,4 @@ spec = do
 
       it "second x y = y" $ do
         "(\\p. p (\\t f. f)) ((\\x y f. f x y) x y)" `shouldEvalTo` "y"
+        "(\\p. p (\\x y z. x)) ((\\x y z f. f x y z) x y z)" `shouldEvalTo` "x"
