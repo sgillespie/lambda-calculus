@@ -20,11 +20,11 @@ library
                        Language.Lambda.Eval,
                        Language.Lambda.Parser,
                        Language.Lambda.PrettyPrint
-  build-depends:       base >= 4.7 && < 5,
+  build-depends:       base,
                        parsec
   default-language:    Haskell2010
 
-executable lambda-calculus
+executable lambda-calculus-exe
   hs-source-dirs:      app
   main-is:             Main.hs
   other-modules:       Paths_lambda_calculus
