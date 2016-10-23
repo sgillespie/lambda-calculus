@@ -13,6 +13,6 @@ before_install:
   - travis_retry curl -L https://www.stackage.org/stack/linux-x86_64 | tar xz --wildcards --strip-components=1 -C ~/.local/bin '*/stack'
 install:
   # setup stack env
-  - stack --no-terminal --skip-ghc-check setup
+  - stack --no-terminal setup
 script:
-  - stack --no-terminal --skip-ghc-check test
+  - stack --no-terminal test
