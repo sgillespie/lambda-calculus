@@ -2,10 +2,6 @@ language: haskell
 cache:
   directories:
   - $HOME/.stack
-ghc:
-  - 7.6
-  - 7.8
-  - 8.0
 before_install:
   # Download and unpack the stack executable
   - mkdir -p ~/.local/bin
