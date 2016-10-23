@@ -1,8 +1,18 @@
 language: haskell
+cache:
+  directories:
+  - $HOME/.stack
 ghc:
   - 7.6
   - 7.8
   - 8.0
+before_install:
+  # Download and unpack the stack executable
+  - mkdir -p ~/.local/bin
+  - export PATH=$HOME/.local/bin:$PATH
+  - travis_retry curl -L https://www.stackage.org/stack/linux-x86_64 | tar xz --wildcards --strip-components=1 -C ~/.local/bin '*/stack'
 install:
-  - cabal install "cabal-install >= 1.22"
-  - cabal install --only-dependencies --enable-tests
+  # setup stack env
+  - ./travis_long stack --no-terminal --skip-ghc-check setup
+script:
+  - stack --no-terminal --skip-ghc-check test
