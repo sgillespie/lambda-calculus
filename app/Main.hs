@@ -7,7 +7,7 @@ import System.Console.Shell.ShellMonad
 import System.Console.Shell.Backend.Readline (readlineBackend)
 
 import Language.Lambda
-import Paths_lambda_calculus
+import Paths_lambda_calculator
 
 main :: IO ()
 main = runShell mkShellDesc readlineBackend ()

@@ -1,14 +1,14 @@
-name:                lambda-calculus
+name:                lambda-calculator
 version:             0.4.0
 synopsis:            A lambda calculus interpreter
 description:         Please see README.md
-homepage:            https://github.com/githubuser/lambda-calculus#readme
+homepage:            https://github.com/sgillespie/lambda-calculus#readme
 license:             MIT
 license-file:        LICENSE
 author:              Sean D Gillespie
 maintainer:          sean@mistersg.net
 copyright:           2016 Sean Gillespie
-category:            Language
+category:            LambdaCalculus,Language,Teaching
 build-type:          Simple
 -- extra-source-files:
 cabal-version:       >=1.10
@@ -24,13 +24,13 @@ library
                        parsec
   default-language:    Haskell2010
 
-executable lambda-calculus-exe
+executable lambda-calculator
   hs-source-dirs:      app
   main-is:             Main.hs
-  other-modules:       Paths_lambda_calculus
+  other-modules:       Paths_lambda_calculator
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
   build-depends:       base,
-                       lambda-calculus,
+                       lambda-calculator,
                        Shellac,
                        Shellac-readline
   default-language:    Haskell2010
@@ -49,7 +49,7 @@ test-suite lambda-calculus-test
                        Language.Lambda.ParserSpec,
                        Language.Lambda.PrettyPrintSpec
   build-depends:       base,
-                       lambda-calculus,
+                       lambda-calculator,
                        hspec,
                        HUnit
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
@@ -57,4 +57,4 @@ test-suite lambda-calculus-test
 
 source-repository head
   type:     git
-  location: https://github.com/githubuser/lambda-calculus
+  location: https://github.com/sgillespie/lambda-calculus
