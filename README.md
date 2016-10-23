@@ -37,17 +37,17 @@ Then install:
 ## Running
 Once the program is installed, you simply run it:
 
-    lambda-calculus
+    lambda-calculator
     
 This will open a repl (read-eval-print loop) prompt
 
-    Lambda Calculus (0.2.0)
+    Lambda Calculator (0.5.0)
     Type :h for help
 
 You can start typing lambda calculus expressions and the program will evaluate them
 and print the result. Here are a few examples:
 
-    Lambda Calculus (0.2.0)
+    Lambda Calculator (0.5.0)
     Type :h for help
     λ > \x. x
     λx. x

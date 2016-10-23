@@ -20,7 +20,7 @@ mkShellDesc = shellDesc' $ mkShellDescription commands eval
           }
 
 shellGreeting :: String
-shellGreeting = "Lambda Calculus (" ++ version' ++ ")\nType :h for help\n"
+shellGreeting = "Lambda Calculator (" ++ version' ++ ")\nType :h for help\n"
   
 shellPrompt :: s -> IO String
 shellPrompt _ = return "λ > "
