@@ -3,3 +3,6 @@ ghc:
   - 7.6
   - 7.8
   - 8.0
+install:
+  - cabal install "cabal-install >= 1.22"
+  - cabal install --only-dependencies --enable-tests
