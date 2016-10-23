@@ -1,4 +1,6 @@
 # Lambda Calculus
+[![Build Status](https://travis-ci.org/sgillespie/lambda-calculus.svg?branch=master)](https://travis-ci.org/sgillespie/lambda-calculus)
+
 Lambda Calculus is a tiny functional language for expressing computation based 
 on function abstraction and application. 
 
