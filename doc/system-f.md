@@ -10,15 +10,7 @@ that is, it accepts most valid programs. Many functional programming languages
 are based on type systems similar to System F, including Haskell 
 (System FC [4]), and ML (Hindley-Milner [5]).
 
-# Simple Types
-In System F, all values must have a type. Simple types can either be actual 
-types, or type variables. For example, suppose we have a Boolean type and 
-valid values are true and false.
-
-    true : Boolean
-    false : Boolean
-
-## Type Context
+# Type Context
 A typing context is a sequence mapping free variables to their types [2]. Given
 a typing context &Gamma;, 
 
@@ -32,6 +24,14 @@ empty, we may omit &Gamma;.
 To indicate we are adding a mapping to &Gamma;, we use the comma operator.
 
     Γ, t:T ⊢ v : V
+
+# Simple Types
+In System F, all values must have a type. Simple types can either be actual 
+types, or type variables. For example, suppose we have a Boolean type and 
+valid values are true and false.
+
+    true : Boolean
+    false : Boolean
 
 # References
 1. [System F](https://en.wikipedia.org/wiki/System_F). Wikipedia: The Free Encyclopedia
