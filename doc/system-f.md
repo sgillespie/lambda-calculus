@@ -10,6 +10,14 @@ that is, it accepts most valid programs. Many functional programming languages
 are based on type systems similar to System F, including Haskell 
 (System FC [4]), and ML (Hindley-Milner [5]).
 
+# Simple Types
+In System F, all values must have a type. Simple types can either be actual 
+types, or type variables. For example, suppose we have a Boolean type and 
+valid values are true and false.
+
+    true : Boolean
+    false : Boolean
+
 # References
 1. [System F](https://en.wikipedia.org/wiki/System_F). Wikipedia: The Free Encyclopedia
 2. Types and Programming Languages. Benjamin C. Pierce
