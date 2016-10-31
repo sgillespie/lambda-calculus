@@ -30,6 +30,15 @@ System F is a straightforward extension of the Simply Typed Lambda Calculus [2],
 abbreviated here as &lambda;<sub>&rarr;</sub>. For this reason, we will start
 with &lambda;<sub>&rarr;</sub>.
 
+All terms in &lambda;<sub>&rarr;</sub>. For variables, this is straightforward.
+For example, suppose Boolean is a type and `x = true`. Then
+
+    x : Boolean 
+
+Formally, variables have the typing rule
+
+    x : T ∈ Γ → ⊢ Γ t : T
+
 # References
 1. [System F](https://en.wikipedia.org/wiki/System_F). Wikipedia: The Free Encyclopedia
 2. Types and Programming Languages. Benjamin C. Pierce
