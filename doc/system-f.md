@@ -18,6 +18,21 @@ valid values are true and false.
     true : Boolean
     false : Boolean
 
+## Type Context
+A typing context is a sequence mapping free variables to their types [2]. Given
+a typing context &Gamma;, 
+
+    Γ ⊢ t : T
+
+can be read: under the assumptions &Gamma;, t has type T. When the context is
+empty, we may omit &Gamma;.
+
+    ⊢ t : T
+
+To indicate we are adding a mapping to &Gamma;, we use the comma operator.
+
+    Γ, t:T ⊢ v : V
+
 # References
 1. [System F](https://en.wikipedia.org/wiki/System_F). Wikipedia: The Free Encyclopedia
 2. Types and Programming Languages. Benjamin C. Pierce
