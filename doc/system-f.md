@@ -25,13 +25,10 @@ To indicate we are adding a mapping to &Gamma;, we use the comma operator.
 
     Γ, t:T ⊢ v : V
 
-# Simple Types
-In System F, all values must have a type. Simple types can either be actual 
-types, or type variables. For example, suppose we have a Boolean type and 
-valid values are true and false.
-
-    true : Boolean
-    false : Boolean
+# Simply Typed Lambda Calculus
+System F is a straightforward extension of the Simply Typed Lambda Calculus [2],
+abbreviated here as &lambda;<sub>rarr;</sub>. For this reason, we will start
+with &lambda;<sub>rarr;</sub>.
 
 # References
 1. [System F](https://en.wikipedia.org/wiki/System_F). Wikipedia: The Free Encyclopedia
