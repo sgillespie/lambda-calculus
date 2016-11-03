@@ -27,17 +27,32 @@ To indicate we are adding a mapping to &Gamma;, we use the comma operator.
 
 # Simply Typed Lambda Calculus
 System F is a straightforward extension of the Simply Typed Lambda Calculus [2],
-abbreviated here as &lambda;<sub>&rarr;</sub>. For this reason, we will start
+abbreviated here as &lambda;<sub>&rarr;</sub>. For this reason, we will start 
 with &lambda;<sub>&rarr;</sub>.
 
-All terms in &lambda;<sub>&rarr;</sub>. For variables, this is straightforward.
-For example, suppose Boolean is a type and `x = true`. Then
+All terms in &lambda;<sub>&rarr;</sub> have a type. By convention, types are
+written beginning with a capital letter. These are all examples of valid
+types
 
-    x : Boolean 
+    X
+    Boolean
+    Nat
+    NatList
 
-Formally, variables have the typing rule
+## Function Types
+Recall that, in &lambda;, functions take exactly one argument and return a 
+value. The types of functions need to indicate the type of the argument and
+its return value. 
 
-    x : T ∈ Γ → ⊢ Γ t : T
+In order to type abstractions, we introduce the arrow operator, &rarr;. A 
+function having the type `A → B` takes an argument of type A and returns a
+value of type B. Following are more examples
+
+    1. X → (Y → Z)
+    2. (Nat → Nat) → Nat (3)
+
+(1) is a curried function that takes an X and a Y and returns a Z. Finally, (2) 
+takes a function of type `Nat → Nat` and returns a Nat.
 
 # References
 1. [System F](https://en.wikipedia.org/wiki/System_F). Wikipedia: The Free Encyclopedia
