@@ -59,6 +59,14 @@ Function types associate to the right. The following types are equivalent
     X → Y → Z
     X → (Y → Z)
 
+## Syntax
+&lambda;<sub>&rarr;</sub>'s syntax is almost identical similar to &lambda;'s. As in &lambda;,
+there are three forms
+
+ * Variables
+ * Lambda abstraction
+ * Function application
+
 # References
 1. [System F](https://en.wikipedia.org/wiki/System_F). Wikipedia: The Free Encyclopedia
 2. Types and Programming Languages. Benjamin C. Pierce
