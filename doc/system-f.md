@@ -54,6 +54,11 @@ value of type B. Following are more examples
 (1) is a curried function that takes an X and a Y and returns a Z. Finally, (2) 
 takes a function of type `Nat → Nat` and returns a Nat.
 
+Function types associate to the right. The following types are equivalent
+
+    X → Y → Z
+    X → (Y → Z)
+
 # References
 1. [System F](https://en.wikipedia.org/wiki/System_F). Wikipedia: The Free Encyclopedia
 2. Types and Programming Languages. Benjamin C. Pierce
