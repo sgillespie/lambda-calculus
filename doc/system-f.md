@@ -64,8 +64,24 @@ Function types associate to the right. The following types are equivalent
 there are three forms
 
  * Variables
- * Lambda abstraction
  * Function application
+ * Lambda abstraction
+
+### Variables and Function Application
+Variables in &lambda;<sub>&rarr;</sub> are identical variables to &lambda;. Variables a just 
+names that hold values, as in `x`. To distinguish between these from type variables, we use
+names that begin with a lowercase letter.
+
+Function application takes the form `f x y z`, where `f` is an abstraction and `x`, `y`, and
+`z` are arguments.
+
+### Lambda Abstraction
+The only syntactic difference is in abstractions. In &lambda;<sub>&rarr;</sub>, we have to
+specify the type of its argument. Consider the following expression.
+
+    λ x:T. body
+
+This defines a function that takes an argument `x` with type `T`.
 
 # References
 1. [System F](https://en.wikipedia.org/wiki/System_F). Wikipedia: The Free Encyclopedia
