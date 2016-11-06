@@ -101,6 +101,41 @@ to the arguments `f` and `x`. The type for `x` can be any type, so we assume the
     2: λ f:(CN → CN) x:X. f (f x)
     3: λ f:(CN → CN) x:X. f (f (f x))
 
+## Type Checking
+In order to typecheck a &lambda;<sub>&rarr;</sub> expression, we need to determine its type.
+If we can determine an expressions type, then it is *well-typed*.
+
+There are three typing rules, one for each form; that is, variables, 
+abstractions, and applications.
+
+### Variables
+We use the following typing rule for variables.
+
+    x:T ∈ Γ 
+    ⇒ Γ ⊢ x:T
+
+In plain english, if the context `Γ` contains `x` of type `T`,  then `x` has 
+type `T` in the context `Γ`.
+
+### Abstractions
+Abstractions use the following typing rule.
+
+    Γ, x:T ⊢ y:U 
+    ⇒ Γ ⊢ λ x:T. y : T → U
+
+We first add `x:T` to the context `Γ`. If `y` has type `U` in this context, then 
+`λ x:T. y` has type  `T → U`
+    
+### Applications
+Finally, function applications have the following rule.
+
+    Γ ⊢ x:T → U
+    Γ ⊢ y:T
+    ⇒ Γ ⊢ x y : U
+
+If `x` has type `T → U` and `y` has type `T` in the context `Γ`, then `x y` has the type
+`U`.
+ 
 # References
 1. [System F](https://en.wikipedia.org/wiki/System_F). Wikipedia: The Free Encyclopedia
 2. Types and Programming Languages. Benjamin C. Pierce
