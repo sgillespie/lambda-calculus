@@ -68,9 +68,9 @@ there are three forms
  * Lambda abstraction
 
 ### Variables and Function Application
-Variables in &lambda;<sub>&rarr;</sub> are identical variables to &lambda;. Variables a just 
-names that hold values, as in `x`. To distinguish between these from type variables, we use
-names that begin with a lowercase letter.
+Variables and function applications in &lambda;<sub>&rarr;</sub> are identical to those in 
+&lambda;. Variables are just names that hold values, as in `x` or `myVar`. To distinguish 
+between these from type variables, we use names that begin with a lowercase letter.
 
 Function application takes the form `f x y z`, where `f` is an abstraction and `x`, `y`, and
 `z` are arguments.
@@ -82,6 +82,24 @@ specify the type of its argument. Consider the following expression.
     λ x:T. body
 
 This defines a function that takes an argument `x` with type `T`.
+
+## Examples
+Church Numerals can be used in &lambda;<sub>rarr;</sub> just as they are in &lambda;. In 
+&lambda;, the Church Numerals are defined by
+
+    0: λ f x. x
+    1: λ f x. f x
+    2: λ f x. f (f x)
+    3: λ f x. f (f (f x))
+
+In order to translate these expressions to &lambda;<sub>&rarr;</sub>, we need to add types
+to the arguments `f` and `x`. The type for `x` can be any type, so we assume there is a type
+`CN`. The type for `f`, the type will be `CT → CT`. We can now construct the numerals.
+
+    0: λ f:(CN → CN) x:X. x
+    1: λ f:(CN → CN) x:X. f x
+    2: λ f:(CN → CN) x:X. f (f x)
+    3: λ f:(CN → CN) x:X. f (f (f x))
 
 # References
 1. [System F](https://en.wikipedia.org/wiki/System_F). Wikipedia: The Free Encyclopedia
