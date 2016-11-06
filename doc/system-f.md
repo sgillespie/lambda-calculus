@@ -96,10 +96,10 @@ In order to translate these expressions to &lambda;<sub>&rarr;</sub>, we need to
 to the arguments `f` and `x`. The type for `x` can be any type, so we assume there is a type
 `CN`. The type for `f`, the type will be `CT → CT`. We can now construct the numerals.
 
-    0: λ f:(CN → CN) x:X. x
-    1: λ f:(CN → CN) x:X. f x
-    2: λ f:(CN → CN) x:X. f (f x)
-    3: λ f:(CN → CN) x:X. f (f (f x))
+    0: λ f:(CN → CN) x:CN. x
+    1: λ f:(CN → CN) x:CN. f x
+    2: λ f:(CN → CN) x:CN. f (f x)
+    3: λ f:(CN → CN) x:CN. f (f (f x))
 
 ## Type Checking
 In order to typecheck a &lambda;<sub>&rarr;</sub> expression, we need to determine its type.
