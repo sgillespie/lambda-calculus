@@ -136,6 +136,37 @@ Finally, function applications have the following rule.
 If `x` has type `T → U` and `y` has type `T` in the context `Γ`, then `x y` has the type
 `U`.
  
+## Typing Examples
+Returning to Church Numerals, consider the representation of `1`.
+
+    λ f:(CN → CN) x:CN. f x
+
+We start with an empty context.
+
+    Γ = {}
+
+We then add `f` and `x` to the context.
+
+    Γ = {f:(CN → CN), x:CN} 
+    
+Using the typing rule for abstractions, we know the type is
+
+    Γ ⊢ λ f(CN → CN) x:CN. f x : (CN → CN) → CN → ?
+
+and `?` is the type of the body of the function. We now examine the body.
+
+    f x
+
+We apply the applications rule
+
+    Γ ⊢ f x : CN
+
+Therefore,
+
+    Γ ⊢ λ f(CN → CN) x:CN. f x : (CN → CN) → CN → CN
+
+In fact, all numerals have the same type.
+
 # References
 1. [System F](https://en.wikipedia.org/wiki/System_F). Wikipedia: The Free Encyclopedia
 2. Types and Programming Languages. Benjamin C. Pierce
