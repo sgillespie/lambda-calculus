@@ -167,6 +167,22 @@ Therefore,
 
 In fact, all numerals have the same type.
 
+## Limitations
+&lambda;<sub>&rarr;</sub> does support generic types. This means that you cannot define
+functions that can operate on multiple types. For example, consider the identity function.
+In &lambda;, it's defined as
+
+    λ x. x
+
+In &lambda;<sub>&rarr;</sub> you would have to redefine it for each type you want to use it
+with
+
+    λ x:CN. x
+    λ x:Boolean. x
+    λ x:((CN → CN) → CN → CN). x
+
+This violates the DRY principal (Don't Repeat Yourself). Fortunately, System F addresses this.
+
 # References
 1. [System F](https://en.wikipedia.org/wiki/System_F). Wikipedia: The Free Encyclopedia
 2. Types and Programming Languages. Benjamin C. Pierce
