@@ -188,8 +188,30 @@ F addresses this.
 As mentioned earlier, System F is an extension of &lambda;<sub>&rarr;</sub>. 
 System F introduces the concept of *polymorphic types*. Using polymorphic types, 
 we can define our functions generically. We use type variables in place of 
-actual variables, and instantiate them with concrete types when necessary.
+actual variables, and instantiate them with concrete types when necessary [1].
 
+# Types
+Types in System F can be
+
+ * Simple types
+ * Type variables
+ * Universal types
+
+Simple types are all types introduced by &lambda;<sub>&rarr;</sub>. Type 
+variables are names that can represent actual types. By convention, we use 
+names that start with capital letters for types and type variables.
+
+*Universal types* are synonymous with polymorphic types. Universal types take 
+the form
+
+    ∀ X. T
+
+This can be read: for all types `X`, `T`. The following type expressions are 
+all valid.
+
+    ∀ X. X → X
+    ∀ X Y. X → Y → X
+    (∀ X. X → X) → (∀ Y. Y → Y) 
 
 # References
 1. [System F](https://en.wikipedia.org/wiki/System_F). Wikipedia: The Free Encyclopedia
