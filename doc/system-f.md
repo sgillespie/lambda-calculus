@@ -190,7 +190,7 @@ System F introduces the concept of *polymorphic types*. Using polymorphic types,
 we can define our functions generically. We use type variables in place of
 actual variables, and instantiate them with concrete types when necessary [1].
 
-# Types
+## Types
 Types in System F can be
 
  * Simple types
@@ -213,11 +213,11 @@ all valid.
     ∀ X Y. X → Y → X
     (∀ X. X → X) → (∀ Y. Y → Y)
 
-# Syntax
+## Syntax
 In addition to the syntax rules of &lambda;<sub>&rarr;</sub>, System F introduces
 two new ones. We repeat each of the syntax rules here.
 
-## Variables
+### Variables
 Once again, variables are names that hold values. By convention, variables begin
 with a lowercase letter to distinguish them from type variables. These are all
 valid examples of variables:
@@ -226,7 +226,7 @@ valid examples of variables:
     y
     myVar
 
-## Abstraction
+### Abstraction
 Abstractions in System F are functions that take one argument. Just as in
 &lambda;<sub>rarr;</sub>, they take the form
 
@@ -234,14 +234,14 @@ Abstractions in System F are functions that take one argument. Just as in
 
 This defines a function that takes an argument `x` with type `T`.
 
-## Function Application
+### Function Application
 Function application takes the form
 
     f x y z
 
 where `f` is an abstraction and `x`, `y`, and `z` are arguments.
 
-## Type Abstraction
+### Type Abstraction
 In System F, polymorphism is achieved by using type variables and instatiating
 them only when necessary. Type variables are introduced by *type abstracions*.
 Type abstractions behave like regular abstractions, except that they operate on
@@ -252,6 +252,43 @@ Type abstractions take the form
     Λ X. body
 
 This defines a type function that takes an argument `X`.
+
+### Type Application
+*Type application* instantiates a type abstraction to a concrete type. It 
+behaves like functional application, except that it operates on types. A type
+application takes the form
+
+    t [T]
+
+Here the expression `t` is applied to the type `T`.
+
+## Examples
+We return to Church Numerals. In &lambda;<sub>&rarr;</sub> we defined these
+by
+
+    0: λ f:(CN → CN) x:CN. x
+    1: λ f:(CN → CN) x:CN. f x
+    2: λ f:(CN → CN) x:CN. f (f x)
+    3: λ f:(CN → CN) x:CN. f (f (f x))
+
+Given a type `CN`. While this is perfectly valid in System F, we can also
+generalize the type `CN`, with a type abstraction.
+
+    0: Λ X. λ f:(X → X) x:X. x
+    1: Λ X. λ f:(X → X) x:X. f x
+    2: Λ X. λ f:(X → X) x:X. f (f x)
+    3: Λ X. λ f:(X → X) x:X. f (f (f x))
+
+We use a type abstraction to introduce a polymorphic type `X`. Using type 
+application, we can instantiate these to the concrete type `CN`. Here
+
+    0: (Λ X. λ f:(X → X) x:X. x) [CN]
+    1: (Λ X. λ f:(X → X) x:X. f x) [CN]
+    2: (Λ X. λ f:(X → X) x:X. f (f x)) [CN]
+    3: (Λ X. λ f:(X → X) x:X. f (f (f x))) [CN]
+
+Using a combination of type abstraction and application, we define functions
+that can operate on all types.
 
 # References
 1. [System F](https://en.wikipedia.org/wiki/System_F). Wikipedia: The Free Encyclopedia
