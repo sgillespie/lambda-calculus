@@ -60,41 +60,43 @@ Function types associate to the right. The following types are equivalent
     X → (Y → Z)
 
 ## Syntax
-&lambda;<sub>&rarr;</sub>'s syntax is almost identical similar to &lambda;'s. As in &lambda;,
-there are three forms
+&lambda;<sub>&rarr;</sub>'s syntax is almost identical similar to &lambda;'s.
+As in &lambda;, there are three forms
 
  * Variables
  * Function application
  * Lambda abstraction
 
 ### Variables and Function Application
-Variables and function applications in &lambda;<sub>&rarr;</sub> are identical to those in
-&lambda;. Variables are just names that hold values, as in `x` or `myVar`. To distinguish
-between these from type variables, we use names that begin with a lowercase letter.
+Variables and function applications in &lambda;<sub>&rarr;</sub> are identical
+to those in &lambda;. Variables are just names that hold values, as in `x` or
+`myVar`. To distinguish between these from type variables, we use names that
+begin with a lowercase letter.
 
-Function application takes the form `f x y z`, where `f` is an abstraction and `x`, `y`, and
-`z` are arguments.
+Function application takes the form `f x y z`, where `f` is an abstraction and
+`x`, `y`, and `z` are arguments.
 
 ### Lambda Abstraction
-The only syntactic difference is in abstractions. In &lambda;<sub>&rarr;</sub>, we have to
-specify the type of its argument. Consider the following expression.
+The only syntactic difference is in abstractions. In &lambda;<sub>&rarr;</sub>,
+we have to specify the type of its argument. Consider the following expression.
 
     λ x:T. body
 
 This defines a function that takes an argument `x` with type `T`.
 
 ## Examples
-Church Numerals can be used in &lambda;<sub>rarr;</sub> just as they are in &lambda;. In
-&lambda;, the Church Numerals are defined by
+Church Numerals can be used in &lambda;<sub>rarr;</sub> just as they are in
+&lambda;. In &lambda;, the Church Numerals are defined by
 
     0: λ f x. x
     1: λ f x. f x
     2: λ f x. f (f x)
     3: λ f x. f (f (f x))
 
-In order to translate these expressions to &lambda;<sub>&rarr;</sub>, we need to add types
-to the arguments `f` and `x`. The type for `x` can be any type, so we assume there is a type
-`CN`. The type for `f`, the type will be `CT → CT`. We can now construct the numerals.
+In order to translate these expressions to &lambda;<sub>&rarr;</sub>, we need
+to add types to the arguments `f` and `x`. The type for `x` can be any type,
+so we assume there is a type `CN`. The type for `f`, the type will be
+`CT → CT`. We can now construct the numerals.
 
     0: λ f:(CN → CN) x:CN. x
     1: λ f:(CN → CN) x:CN. f x
@@ -102,8 +104,9 @@ to the arguments `f` and `x`. The type for `x` can be any type, so we assume the
     3: λ f:(CN → CN) x:CN. f (f (f x))
 
 ## Type Checking
-In order to typecheck a &lambda;<sub>&rarr;</sub> expression, we need to determine its type.
-If we can determine an expressions type, then it is *well-typed*.
+In order to typecheck a &lambda;<sub>&rarr;</sub> expression, we need to
+determine its type. If we can determine an expressions type, then it is
+*well-typed*.
 
 There are three typing rules, one for each form; that is, variables,
 abstractions, and applications.
@@ -123,8 +126,8 @@ Abstractions use the following typing rule.
     Γ, x:T ⊢ y:U
     ⇒ Γ ⊢ λ x:T. y : T → U
 
-We first add `x:T` to the context `Γ`. If `y` has type `U` in this context, then
-`λ x:T. y` has type  `T → U`
+We first add `x:T` to the context `Γ`. If `y` has type `U` in this context,
+then `λ x:T. y` has type  `T → U`
 
 ### Applications
 Finally, function applications have the following rule.
@@ -133,8 +136,8 @@ Finally, function applications have the following rule.
     Γ ⊢ y:T
     ⇒ Γ ⊢ x y : U
 
-If `x` has type `T → U` and `y` has type `T` in the context `Γ`, then `x y` has the type
-`U`.
+If `x` has type `T → U` and `y` has type `T` in the context `Γ`, then `x y`
+has the type `U`.
 
 ## Typing Examples
 Returning to Church Numerals, consider the representation of `1`.
@@ -214,8 +217,8 @@ all valid.
     (∀ X. X → X) → (∀ Y. Y → Y)
 
 ## Syntax
-In addition to the syntax rules of &lambda;<sub>&rarr;</sub>, System F introduces
-two new ones. We repeat each of the syntax rules here.
+In addition to the syntax rules of &lambda;<sub>&rarr;</sub>, System F
+introduces two new ones. We repeat each of the syntax rules here.
 
 ### Variables
 Once again, variables are names that hold values. By convention, variables begin
@@ -254,7 +257,7 @@ Type abstractions take the form
 This defines a type function that takes an argument `X`.
 
 ### Type Application
-*Type application* instantiates a type abstraction to a concrete type. It 
+*Type application* instantiates a type abstraction to a concrete type. It
 behaves like functional application, except that it operates on types. A type
 application takes the form
 
@@ -279,7 +282,7 @@ generalize the type `CN`, with a type abstraction.
     2: Λ X. λ f:(X → X) x:X. f (f x)
     3: Λ X. λ f:(X → X) x:X. f (f (f x))
 
-We use a type abstraction to introduce a polymorphic type `X`. Using type 
+We use a type abstraction to introduce a polymorphic type `X`. Using type
 application, we can instantiate these to the concrete type `CN`. Here
 
     0: (Λ X. λ f:(X → X) x:X. x) [CN]
@@ -289,6 +292,7 @@ application, we can instantiate these to the concrete type `CN`. Here
 
 Using a combination of type abstraction and application, we define functions
 that can operate on all types.
+
 
 # References
 1. [System F](https://en.wikipedia.org/wiki/System_F). Wikipedia: The Free Encyclopedia
