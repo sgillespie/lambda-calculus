@@ -6,8 +6,8 @@ types [1].
 
 In general, type systems aim to eliminate certain programming errors [3]. A good
 type system should reject ill-typed programs, while not being too conservative--
-that is, it accepts most valid programs. Many functional programming languages
-are based on type systems similar to System F, including Haskell
+that is, it accepts most valid programs [2]. Many functional programming
+languages are based on type systems similar to System F, including Haskell
 (System FC [4]), and ML (Hindley-Milner [5]).
 
 # Type Context
@@ -41,12 +41,12 @@ types
 
 ## Function Types
 Recall that, in &lambda;, functions take exactly one argument and return a
-value. The types of functions need to indicate the type of the argument and
+value [6]. The types of functions need to indicate the type of the argument and
 its return value.
 
 In order to type abstractions, we introduce the arrow operator, &rarr;. A
 function having the type `A → B` takes an argument of type A and returns a
-value of type B. Following are more examples
+value of type B [6]. Following are more examples
 
     1. X → (Y → Z)
     2. (Nat → Nat) → Nat (3)
@@ -61,7 +61,7 @@ Function types associate to the right. The following types are equivalent
 
 ## Syntax
 &lambda;<sub>&rarr;</sub>'s syntax is almost identical similar to &lambda;'s.
-As in &lambda;, there are three forms
+As in &lambda;, there are three forms [2]
 
  * Variables
  * Function application
@@ -69,16 +69,17 @@ As in &lambda;, there are three forms
 
 ### Variables and Function Application
 Variables and function applications in &lambda;<sub>&rarr;</sub> are identical
-to those in &lambda;. Variables are just names that hold values, as in `x` or
-`myVar`. To distinguish between these from type variables, we use names that
+to those in &lambda; [2]. Variables are just names that hold values, as in `x`
+or `myVar`. To distinguish between these from type variables, we use names that
 begin with a lowercase letter.
 
 Function application takes the form `f x y z`, where `f` is an abstraction and
 `x`, `y`, and `z` are arguments.
 
 ### Lambda Abstraction
-The only syntactic difference is in abstractions. In &lambda;<sub>&rarr;</sub>,
-we have to specify the type of its argument. Consider the following expression.
+The only syntactic difference is in abstractions [1]. In
+&lambda;<sub>&rarr;</sub>, we have to specify the type of its argument. Consider
+the following expression.
 
     λ x:T. body
 
@@ -293,10 +294,11 @@ application, we can instantiate these to the concrete type `CN`. Here
 Using a combination of type abstraction and application, we define functions
 that can operate on all types.
 
-
 # References
 1. [System F](https://en.wikipedia.org/wiki/System_F). Wikipedia: The Free Encyclopedia
 2. Types and Programming Languages. Benjamin C. Pierce
 3. [Type system](https://en.wikipedia.org/wiki/Type_system). Wikipedia: The Free Encyclopedia
 4. [System FC: equality constraints and coercions](https://ghc.haskell.org/trac/ghc/wiki/Commentary/Compiler/FC). GHC Developer Wiki
 5. [Hindley-Milner type system](https://en.wikipedia.org/wiki/Hindley%E2%80%93Milner_type_system). Wikipedia: The Free Encyclopedia
+6. [Lambda Calculus](https://github.com/sgillespie/lambda-calculus/blob/master/doc/lambda-calculus.md). Sean Gillespie
+7. [Simply typed lambda calculus](https://en.wikipedia.org/wiki/Simply_typed_lambda_calculus). Wikpedia. The Free Encyclopedia
