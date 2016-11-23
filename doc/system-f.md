@@ -294,6 +294,59 @@ application, we can instantiate these to the concrete type `CN`. Here
 Using a combination of type abstraction and application, we define functions
 that can operate on all types.
 
+## Type Checking
+Just like &lambda;<sub>&rarr;</sub>, an expression is *well-typed* if we can
+determine its type.
+
+In addition to the typing rules in &lambda;<sub>&rarr;</sub>, we introduce two
+more. We repeat them here.
+
+### Variables
+Variables have the typing rule
+
+    x:T ∈ Γ
+    ⇒ Γ ⊢ x:T
+
+If the context `Γ` contains `x` of type `T`,  then `x` has type `T` in the 
+context `Γ`.
+
+### Abstractions
+Abstractions use the typing rule
+
+    Γ, x:T ⊢ y:U
+    ⇒ Γ ⊢ λ x:T. y : T → U
+
+We first add `x:T` to the context `Γ`. If `y` has type `U` in this context,
+then `λ x:T. y` has type  `T → U`
+
+### Applications
+Function applications have the rule
+
+    Γ ⊢ x:T → U, Γ ⊢ y:T
+    ⇒ Γ ⊢ x y : U
+
+If `x` has type `T → U` and `y` has type `T` in the context `Γ`, then `x y`
+has the type `U`.
+
+### Type Abstractions
+Type abstraction is the first of two new rules.
+
+    Γ, X ⊢ t:T
+    ⇒ Γ ⊢ Λ X. t : ∀ X. T
+
+We add the type `X` to the context. If `t` has type `T`, then `Λ X. t` has the
+type ∀ X. T.
+
+### Type Applications
+Finally, type applications have the rule
+
+    Γ ⊢ t : ∀ X. T
+    ⇒ Γ ⊢ t [U] : [X ↦ U] T
+
+Assume `t` has type `∀ X. T`. Given the type application `t [U]`, we substitute
+all occurrences of `X` with `U` in `T`.
+
+
 # References
 1. [System F](https://en.wikipedia.org/wiki/System_F). Wikipedia: The Free Encyclopedia
 2. Types and Programming Languages. Benjamin C. Pierce
