@@ -1,15 +1,16 @@
 # Introduction
-Pure &lambda; can easily be extended with a static type system. We explore
-two such systems, the *Simply Typed Lambda Calculus* and *System F*. The
-Simply Typed Lambda Calculus, abbreviated as &lambda;<sub>&rarr;</sub> is 
-the simplest typed &lambda;. *System F*  is an extension of 
+The Lambda Calculus can easily be extended with a static type system. We 
+explore two such systems, the *Simply Typed Lambda Calculus* and *System F*. 
+The Simply Typed Lambda Calculus, abbreviated as &lambda;<sub>&rarr;</sub> is 
+the simplest typed &lambda;. *System F* is an extension of 
 &lambda;<sub>&rarr;</sub> that introduces the concept of generic types, also 
 called polymorphic types [1].
 
-In general, type systems aim to eliminate certain programming errors [3]. A good
-type system should reject ill-typed programs, while accepting most valid programs 
-[2]. Many functional programming languages are based on type systems similar 
-to System F, including Haskell (System FC [4]), and ML (Hindley-Milner [5]).
+In general, type systems aim to eliminate certain programming errors [3]. A 
+good type system should reject ill-typed programs, while accepting most valid 
+programs [2]. Many functional programming languages are based on type systems 
+similar to System F, including Haskell (System FC [4]), and ML (Hindley-Milner 
+[5]).
 
 # Type Context
 A typing context is a sequence mapping free variables to their types [2]. Given
