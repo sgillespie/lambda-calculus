@@ -18,12 +18,12 @@ a typing context &Gamma;,
 
     Γ ⊢ t : T
 
-can be read: under the assumptions &Gamma;, t has type T. When the context is
-empty, we may omit &Gamma;.
+can be read: under the assumptions `Γ`, `t` has type `T`. When the context is
+empty, we may omit `Γ`.
 
     ⊢ t : T
 
-To indicate we are adding a mapping to &Gamma;, we use the comma operator.
+To indicate we are adding a mapping to `Γ`, we use the comma operator.
 
     Γ, t:T ⊢ v : V
 
