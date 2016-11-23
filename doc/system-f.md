@@ -1,7 +1,7 @@
 # Introduction
 The Lambda Calculus can easily be extended with a static type system. We 
 explore two such systems, the *Simply Typed Lambda Calculus* and *System F*. 
-The Simply Typed Lambda Calculus, abbreviated as &lambda;<sub>&rarr;</sub> is 
+The Simply Typed Lambda Calculus, abbreviated as &lambda;<sub>&rarr;</sub>, is 
 the simplest typed &lambda;. *System F* is an extension of 
 &lambda;<sub>&rarr;</sub> that introduces the concept of generic types, also 
 called polymorphic types [1].
@@ -28,13 +28,8 @@ To indicate we are adding a mapping to `Γ`, we use the comma operator.
     Γ, t:T ⊢ v : V
 
 # Simply Typed Lambda Calculus
-System F is a straightforward extension of the Simply Typed Lambda Calculus [2],
-abbreviated here as &lambda;<sub>&rarr;</sub>. For this reason, we will start
-with &lambda;<sub>&rarr;</sub>.
-
-All terms in &lambda;<sub>&rarr;</sub> have a type. By convention, types are
-written beginning with a capital letter. These are all examples of valid
-types
+All terms in &lambda;<sub>&rarr;</sub> have a type. By convention, types begin
+with a capital letter. These are all valid types
 
     X
     Boolean
@@ -42,19 +37,15 @@ types
     NatList
 
 ## Function Types
-Recall that, in &lambda;, functions take exactly one argument and return a
-value [6]. The types of functions need to indicate the type of the argument and
-its return value.
-
 In order to type abstractions, we introduce the arrow operator, &rarr;. A
 function having the type `A → B` takes an argument of type A and returns a
-value of type B [6]. Following are more examples
+value of type B [7]. Following are more examples
 
     1. X → (Y → Z)
-    2. (Nat → Nat) → Nat (3)
+    2. (Nat → Nat) → Nat
 
-(1) is a curried function that takes an X and a Y and returns a Z. Finally, (2)
-takes a function of type `Nat → Nat` and returns a Nat.
+(1) is a curried function that takes an `X` and a `Y` and returns a `Z`. 
+Finally, (2) takes a function of type `Nat → Nat` and returns a Nat.
 
 Function types associate to the right. The following types are equivalent
 
