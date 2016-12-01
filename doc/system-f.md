@@ -38,8 +38,8 @@ with a capital letter. These are all valid types
 
 ## Function Types
 In order to type abstractions, we introduce the arrow operator, &rarr;. A
-function having the type `A → B` takes an argument of type A and returns a
-value of type B [7]. Following are more examples
+function having the type `A → B` takes an argument of type `A` and returns a
+value of type `B` [7]. Following are more examples
 
     1. X → (Y → Z)
     2. (Nat → Nat) → Nat
@@ -53,25 +53,34 @@ Function types associate to the right. The following types are equivalent
     X → (Y → Z)
 
 ## Syntax
-&lambda;<sub>&rarr;</sub>'s syntax is almost identical similar to &lambda;'s.
-As in &lambda;, there are three forms [2]
+As in &lambda;, &lambda;<sub>&rarr;</sub> has three forms [2]
 
  * Variables
  * Function application
  * Lambda abstraction
 
-### Variables and Function Application
-Variables and function applications in &lambda;<sub>&rarr;</sub> are identical
-to those in &lambda; [2]. Variables are just names that hold values, as in `x`
-or `myVar`. To distinguish between these from type variables, we use names that
-begin with a lowercase letter.
+Variables and applications in &lambda;<sub>&rarr;</sub> are identical to those
+in &lambda; [2]. The only syntactic difference is in abstractions [1].
 
-Function application takes the form `f x y z`, where `f` is an abstraction and
-`x`, `y`, and `z` are arguments.
+### Variables
+A variable is just a name that holds a specific value. 
+
+    x
+    myVar
+
+To distinguish these from type variables, we use names that begin with a 
+lowercase letter.
+
+### Function Application
+Function application takes the form 
+
+    f x y z
+    
+where `f` is an abstraction and `x`, `y`, and `z` are arguments.
 
 ### Lambda Abstraction
-The only syntactic difference is in abstractions [1]. In
-&lambda;<sub>&rarr;</sub>, we have to specify the type of its argument. Consider
+Recall that, in &lambda;, functions take exactly one argument. In 
+&lambda;<sub>&rarr;</sub>, we must specify the type of that argument. Consider 
 the following expression.
 
     λ x:T. body
@@ -338,6 +347,52 @@ Finally, type applications have the rule
 
 Assume `t` has type `∀ X. T`. Given the type application `t [U]`, we substitute
 all occurrences of `X` with `U` in `T`.
+
+## Typing Examples
+We return to Church Numerals. Consider the representation of `1`.
+
+    Λ X. λ f:(X → X) x:X. f x
+
+We start with an empty context.
+
+    Γ = {}
+
+We then add `X` to the context.
+
+    Γ = {X}
+
+Using the typing rule for type abstractions, we know the type is
+
+    Γ ⊢ Λ X. λ f:(X → X) x:X. f x : ∀ X. ?
+
+and `?` is the type of the body of the type abstraction. We add `f` and `x` to
+the context.
+
+    Γ = {X, f:X→X, x:X}
+    
+Then apply the rule for abstractions,
+
+    Γ ⊢ λ f:(X → X) x:X. f x : (X → X) → X → ?
+
+and `?` is the type of the body of the function. The body is
+
+    f x
+
+We apply the applications rule
+
+    Γ ⊢ f x : X
+
+We now know the type of the abstraction
+
+    Γ ⊢ λ f:(X → X) x:X. f x : (X → X) → X → X
+
+and the entire expression
+
+    Γ ⊢ Λ X. λ f:(X → X) x:X. f x : ∀ X. (X → X) → X → X
+
+
+
+    
 
 
 # References
