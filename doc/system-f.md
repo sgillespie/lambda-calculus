@@ -390,11 +390,6 @@ and the entire expression
 
     Γ ⊢ Λ X. λ f:(X → X) x:X. f x : ∀ X. (X → X) → X → X
 
-
-
-    
-
-
 # References
 1. [System F](https://en.wikipedia.org/wiki/System_F). Wikipedia: The Free Encyclopedia
 2. Types and Programming Languages. Benjamin C. Pierce
