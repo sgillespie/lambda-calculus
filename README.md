@@ -8,9 +8,10 @@ This project is intended to be an educational resource for learning and
 implementing functional programming languages.
 
 # Introduction to Lambda Calculus
-An introduction to Lambda Calculus is provided. The tutorial can be found at
+Introductory material is provided. They can be found at
 
 [doc/lambda-calculus.md](doc/lambda-calculus.md)
+[doc/system-f.md](doc/system-f.md)
 
 ## Extended Examples
 More examples can be found in the test-suite, located at
