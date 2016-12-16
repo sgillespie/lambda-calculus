@@ -74,6 +74,28 @@ spec = do
           uniques = ["x", "y"]
       alphaConvert uniques freeVars expr `shouldBe` Abs "y" (Var "y")
 
+  describe "etaConvert" $ do
+    it "eta converts simple expressions" $ do
+      let expr = Abs "x" $ App (Var "f") (Var "x")
+      etaConvert expr `shouldBe` Var "f" 
+
+    it "eta converts nested applications" $ do
+      let expr = Abs "y" $ App (App (Var "f") (Var "x")) (Var "y")
+      etaConvert expr `shouldBe` App (Var "f") (Var "x")
+
+      let expr' = Abs "x" $ Abs "y" (App (App (Var "f") (Var "x")) (Var "y"))
+      etaConvert expr' `shouldBe` Var "f" 
+
+      let expr'' = Abs "x" (Abs "y" (App (Var "y") (Var "x")))
+      etaConvert expr'' `shouldBe` expr''
+
+      let expr''' = Abs "f" (Abs "x" (Var "x"))
+      etaConvert expr''' `shouldBe` expr'''
+
+    it "ignores non-eta convertable expressions" $ do
+      let expr = Abs "x" $ Var "x"
+      etaConvert expr `shouldBe` expr
+
   describe "freeVarsOf" $ do
     it "Returns simple vars" $ do
       freeVarsOf (Var "x") `shouldBe` ["x"]
