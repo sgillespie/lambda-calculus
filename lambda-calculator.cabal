@@ -19,7 +19,8 @@ library
                        Language.Lambda.Expression,
                        Language.Lambda.Eval,
                        Language.Lambda.Parser,
-                       Language.Lambda.PrettyPrint
+                       Language.Lambda.PrettyPrint,
+                       Language.SystemF
   build-depends:       base <= 5,
                        parsec
   default-language:    Haskell2010
