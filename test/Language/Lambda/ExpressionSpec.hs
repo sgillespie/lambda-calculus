@@ -6,23 +6,22 @@ import Language.Lambda.Expression
 import Language.Lambda.PrettyPrint
 
 spec :: Spec
-spec = do
-  describe "prettyPrint" $ do
-    it "prints simple variables" $ do
+spec = describe "prettyPrint" $ do
+    it "prints simple variables" $ 
       prettyPrint (Var "x") `shouldBe` "x"
 
-    it "prints simple abstractions" $ do
+    it "prints simple abstractions" $
       prettyPrint (Abs "x" (Var "x")) `shouldBe` "λx. x"
 
-    it "prints simple applications" $ do
+    it "prints simple applications" $
       prettyPrint (App (Var "a") (Var "b"))
         `shouldBe` "a b"
 
-    it "prints nested applications" $ do
+    it "prints nested applications" $
       prettyPrint (Abs "f" (Abs "x" (Var"x")))
         `shouldBe` "λf x. x"
 
-    it "prints nested applications" $ do
+    it "prints nested applications" $
       prettyPrint (App (App (Var "f") (Var "x")) (Var "y"))
         `shouldBe` "f x y"
 
