@@ -1,6 +1,7 @@
 module Main where
 
 import Data.Version
+import Data.Semigroup
 
 import Options.Applicative
 import System.Console.Shell
