@@ -2,15 +2,42 @@ module Main where
 
 import Data.Version
 
+import Options.Applicative
 import System.Console.Shell
 import System.Console.Shell.ShellMonad
 import System.Console.Shell.Backend.Readline (readlineBackend)
 
 import Language.Lambda
-import Paths_lambda_calculator
+import qualified Paths_lambda_calculator as P
 
 main :: IO ()
-main = runShell mkShellDesc readlineBackend ()
+main = execParser opts >>= runShell'
+  where opts = info (helper <*> cliParser)
+                    (briefDesc <> progDesc "A Lambda Calculus Interpreter")
+
+-- Option Parsing
+data CliOptions = CliOptions {
+  language :: Language,
+  version :: Bool
+  }
+
+data Language = Untyped | SystemF
+  deriving (Eq, Show)
+
+cliParser :: Parser CliOptions
+cliParser = CliOptions 
+  <$> flag Untyped SystemF (long "system-f" <> 
+                            short 'f' <> 
+                            help "Use the System F interpreter")
+  <*> switch (long "version" <> 
+              short 'v' <> 
+              help "Print the version")
+
+-- Interactive Shell
+runShell' :: CliOptions -> IO ()
+runShell' CliOptions{version=True} = putStrLn version'
+runShell' CliOptions{language=Untyped} = runShell mkShellDesc readlineBackend ()
+runShell' CliOptions{language=SystemF} = error "Not Implemented!"
 
 mkShellDesc :: ShellDescription ()
 mkShellDesc = shellDesc' $ mkShellDescription commands eval
@@ -38,5 +65,5 @@ eval = either shellPutErrLn' shellPutStrLn' . evalString
         shellPutStrLn' = shellPutStrLn . prettyPrint
 
 version' :: String
-version' = showVersion version
+version' = showVersion P.version
  
