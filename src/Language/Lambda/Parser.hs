@@ -22,7 +22,7 @@ var = Var <$> identifier
 
 abs :: Parser (LambdaExpr String)
 abs = curry <$> idents <*> expr
-  where idents = (symbol '\\') *> many1 identifier <* (symbol '.')
+  where idents = symbol '\\' *> many1 identifier <* symbol '.'
         curry = flip (foldr Abs)
 
 app :: Parser (LambdaExpr String)
