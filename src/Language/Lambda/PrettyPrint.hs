@@ -13,7 +13,7 @@ newtype PDoc s = PDoc [s]
   deriving (Eq, Show)
 
 instance PrettyPrint s => PrettyPrint (PDoc s) where
-  prettyPrint (PDoc ls) = concat . map prettyPrint $ ls
+  prettyPrint (PDoc ls) = concatMap prettyPrint ls
 
 instance Monoid (PDoc s) where
   mempty = empty
@@ -48,3 +48,6 @@ space = ' '
 
 lambda :: Char
 lambda = 'λ'
+
+upperLambda :: Char
+upperLambda = 'Λ'

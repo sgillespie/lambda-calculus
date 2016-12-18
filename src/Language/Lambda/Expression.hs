@@ -46,6 +46,6 @@ pprApp pdoc e1 e2
   = pprExpr pdoc e1 `mappend` addSpace (pprExpr pdoc e2)
 
 uncurry :: n -> LambdaExpr n -> ([n], LambdaExpr n)
-uncurry n body = uncurry' [n] body
+uncurry n = uncurry' [n]
   where uncurry' ns (Abs n' body') = uncurry' (n':ns) body'
         uncurry' ns body'          = (reverse ns, body')

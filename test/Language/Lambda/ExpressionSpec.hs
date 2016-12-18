@@ -17,8 +17,8 @@ spec = describe "prettyPrint" $ do
       prettyPrint (App (Var "a") (Var "b"))
         `shouldBe` "a b"
 
-    it "prints nested applications" $
-      prettyPrint (Abs "f" (Abs "x" (Var"x")))
+    it "prints nested abstractions" $
+      prettyPrint (Abs "f" (Abs "x" (Var "x")))
         `shouldBe` "λf x. x"
 
     it "prints nested applications" $
