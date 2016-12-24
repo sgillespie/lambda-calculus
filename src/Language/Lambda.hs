@@ -1,5 +1,7 @@
+{-# LANGUAGE FlexibleInstances #-}
 module Language.Lambda (
   LambdaExpr(..),
+  ParseError(..),
   PrettyPrint(..),
   evalExpr,
   evalString,
@@ -13,10 +15,11 @@ import Text.Parsec
 import Language.Lambda.Eval
 import Language.Lambda.Expression
 import Language.Lambda.Parser
+import Language.Lambda.Util.Eval
 import Language.Lambda.Util.PrettyPrint
 
-evalString :: String -> Either ParseError (LambdaExpr String)
-evalString = fmap (evalExpr uniques) . parseExpr
+instance Eval (LambdaExpr String) where
+  evalString = fmap (evalExpr uniques) . parseExpr
 
 uniques :: [String]
 uniques = concatMap (\p -> map (:p) . reverse $ ['a'..'z']) suffix

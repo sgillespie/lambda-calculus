@@ -2,7 +2,7 @@ module Main where
 
 import Data.Version
 
-import Options.Applicative
+import Options.Applicative hiding (ParseError)
 import System.Console.Shell
 import System.Console.Shell.ShellMonad
 import System.Console.Shell.Backend.Readline (readlineBackend)
@@ -57,12 +57,15 @@ commands = [exitCommand "q",
             helpCommand "h"]
 
 eval :: String -> Sh s ()
-eval = either shellPutErrLn' shellPutStrLn' . evalString
+eval = either shellPutErrLn' shellPutStrLn' . eval
   where shellPutErrLn' :: Show s => s -> Sh s' ()
         shellPutErrLn' = shellPutErrLn . show
 
         shellPutStrLn' :: PrettyPrint s => s -> Sh s' ()
         shellPutStrLn' = shellPutStrLn . prettyPrint
+
+        eval :: String -> Either ParseError (LambdaExpr String)
+        eval = evalString
 
 version' :: String
 version' = showVersion P.version
