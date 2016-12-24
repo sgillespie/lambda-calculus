@@ -1,8 +1,8 @@
-module Language.Lambda.PrettyPrintSpec where
+module Language.Lambda.Util.PrettyPrintSpec where
 
 import Test.Hspec
 
-import Language.Lambda.PrettyPrint
+import Language.Lambda.Util.PrettyPrint
   
 spec :: Spec
 spec = describe "PDoc" $ do

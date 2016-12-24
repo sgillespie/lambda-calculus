@@ -1,5 +1,5 @@
 {-# LANGUAGE FlexibleInstances #-}
-module Language.Lambda.PrettyPrint where
+module Language.Lambda.Util.PrettyPrint where
 
 import qualified Data.List as L
 

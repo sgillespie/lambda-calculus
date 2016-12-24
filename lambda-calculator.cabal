@@ -19,7 +19,8 @@ library
                        Language.Lambda.Expression,
                        Language.Lambda.Eval,
                        Language.Lambda.Parser,
-                       Language.Lambda.PrettyPrint,
+
+                       Language.Lambda.Util.PrettyPrint,
 
                        Language.SystemF,
                        Language.SystemF.Expression,
@@ -52,7 +53,8 @@ test-suite lambda-calculus-test
                        Language.Lambda.EvalSpec,
                        Language.Lambda.HspecUtils,
                        Language.Lambda.ParserSpec,
-                       Language.Lambda.PrettyPrintSpec,
+
+                       Language.Lambda.Util.PrettyPrintSpec,
 
                        Language.SystemFSpec,
                        Language.SystemF.ExpressionSpec,

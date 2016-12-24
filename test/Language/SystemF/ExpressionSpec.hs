@@ -3,7 +3,7 @@ module Language.SystemF.ExpressionSpec where
 
 import Test.Hspec
 
-import Language.Lambda.PrettyPrint
+import Language.Lambda.Util.PrettyPrint
 import Language.SystemF.Expression
 
 spec :: Spec

@@ -1,7 +1,7 @@
 {-# LANGUAGE FlexibleInstances #-}
 module Language.SystemF.Expression where
 
-import Language.Lambda.PrettyPrint
+import Language.Lambda.Util.PrettyPrint
 
 data SystemFExpr name ty
   = Var name                                        -- Variable

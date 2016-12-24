@@ -3,7 +3,7 @@ module Language.Lambda.Expression where
 
 import Prelude hiding (abs, uncurry)
 
-import Language.Lambda.PrettyPrint
+import Language.Lambda.Util.PrettyPrint
 
 data LambdaExpr name
   = Var name

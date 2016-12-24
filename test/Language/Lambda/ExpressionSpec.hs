@@ -3,7 +3,7 @@ module Language.Lambda.ExpressionSpec where
 import Test.Hspec
 
 import Language.Lambda.Expression
-import Language.Lambda.PrettyPrint
+import Language.Lambda.Util.PrettyPrint
 
 spec :: Spec
 spec = describe "prettyPrint" $ do
