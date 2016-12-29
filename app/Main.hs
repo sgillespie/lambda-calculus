@@ -97,12 +97,7 @@ commands = [
   ]
 
 eval :: (String -> Result String) -> String -> Sh s' ()
-eval f = either shellPutErrLn' shellPutStrLn' . f
-  where shellPutErrLn' :: Show s => s -> Sh s' ()
-        shellPutErrLn' = shellPutErrLn . show
-
-        shellPutStrLn' :: PrettyPrint s => s -> Sh s' ()
-        shellPutStrLn' = shellPutStrLn . prettyPrint
+eval f = either shellPutErrLn shellPutStrLn . f
 
 -- Get the current version
 version' :: String
