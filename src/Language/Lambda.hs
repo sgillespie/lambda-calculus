@@ -15,11 +15,10 @@ import Text.Parsec
 import Language.Lambda.Eval
 import Language.Lambda.Expression
 import Language.Lambda.Parser
-import Language.Lambda.Util.Eval
 import Language.Lambda.Util.PrettyPrint
 
-instance Eval (LambdaExpr String) where
-  evalString = fmap (evalExpr uniques) . parseExpr
+evalString :: String -> Either ParseError (LambdaExpr String)
+evalString = fmap (evalExpr uniques) . parseExpr
 
 uniques :: [String]
 uniques = concatMap (\p -> map (:p) . reverse $ ['a'..'z']) suffix
