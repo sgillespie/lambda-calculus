@@ -1,15 +1,16 @@
 module Language.SystemF (
   PrettyPrint(..),
   SystemFExpr(..),
-  evalString
+  evalString,
+  parseExpr
   ) where
 
 import Text.Parsec
 
 import Language.Lambda.Util.PrettyPrint
 import Language.SystemF.Expression
+import Language.SystemF.Parser
 
--- TODO
 evalString :: String -> Either ParseError (SystemFExpr String String)
-evalString = undefined
+evalString = parseExpr
 
