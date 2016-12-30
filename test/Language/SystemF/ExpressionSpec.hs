@@ -14,7 +14,7 @@ spec = describe "prettyPrint" $ do
   it "prints simple applications" $
     prettyPrint' (App (Var "a") (Var "b")) `shouldBe` "a b"
 
-  it "prints simple abstracctions" $ 
+  it "prints simple abstractions" $ 
     prettyPrint (Abs "x" "T" (Var "x")) `shouldBe` "λ x:T. x"
 
   it "prints simple type abstractions" $
@@ -44,3 +44,17 @@ spec = describe "prettyPrint" $ do
 
     prettyPrint (App (Abs "f" "F" (Var "f")) (Abs "g" "G" (Var "g")))
       `shouldBe` "(λ f:F. f) (λ g:G. g)"
+
+  it "prints simple types" $
+    prettyPrint (TyVar "X") `shouldBe` "X"
+
+  it "print simple arrow types" $
+    prettyPrint (TyArrow (TyVar "A") (TyVar "B")) `shouldBe` "A -> B"
+
+  it "prints chained arrow types" $
+    prettyPrint (TyArrow (TyVar "X") (TyArrow (TyVar "Y") (TyVar "Z")))
+      `shouldBe` "X -> Y -> Z"
+
+  it "prints nested arrow types" $
+    prettyPrint (TyArrow (TyArrow (TyVar "T") (TyVar "U")) (TyVar "V"))
+      `shouldBe` "(T -> U) -> V"

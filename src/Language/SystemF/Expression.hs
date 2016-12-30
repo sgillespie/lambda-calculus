@@ -1,6 +1,8 @@
 {-# LANGUAGE FlexibleInstances #-}
 module Language.SystemF.Expression where
 
+import Data.Monoid
+
 import Language.Lambda.Util.PrettyPrint
 
 data SystemFExpr name ty
@@ -14,9 +16,17 @@ data SystemFExpr name ty
                                                     -- x [X]
   deriving (Eq, Show)
 
+data Ty name
+  = TyVar name                      -- Type variable (T)
+  | TyArrow (Ty name) (Ty name) -- Type arrow    (T -> U)
+  deriving (Eq, Show)
+
 -- Pretty printing
 instance (PrettyPrint n, PrettyPrint t) => PrettyPrint (SystemFExpr n t) where
   prettyPrint = prettyPrint . pprExpr empty
+
+instance PrettyPrint n => PrettyPrint (Ty n) where
+  prettyPrint = prettyPrint . pprTy empty
 
 -- Same as prettyPrint, but we assume the same type for names and types. Useful
 -- for testing.
@@ -72,6 +82,26 @@ pprAbs pdoc name ty body = between vars' lambda' ". " (pprExpr pdoc body')
         vars' = intercalate (map (uncurry pprArg) vars) " " empty
         pprArg n t = prettyPrint n ++ ":" ++ prettyPrint t
         lambda' = [lambda, space]
+
+-- Pretty print types
+pprTy :: PrettyPrint n
+      => PDoc String
+      -> Ty n
+      -> PDoc String
+pprTy pdoc (TyVar n) = prettyPrint n `add` pdoc
+pprTy pdoc (TyArrow a b) = pprTyArrow pdoc a b
+
+pprTyArrow :: PrettyPrint n
+           => PDoc String
+           -> Ty n
+           -> Ty n
+           -> PDoc String
+pprTyArrow pdoc a@(TyVar _) b = pprTyArrow' pdoc a b
+pprTyArrow pdoc a@(TyArrow _ _) b = pprTyArrow' pdoc a' b
+  where a' = betweenParens (pprTy empty a) empty
+
+pprTyArrow' pdoc a b = between arrow (prettyPrint a) (prettyPrint b) pdoc
+  where arrow = " -> " `add` empty
 
 -- Pretty print a type abstraction
 pprTAbs :: (PrettyPrint n, PrettyPrint t)
