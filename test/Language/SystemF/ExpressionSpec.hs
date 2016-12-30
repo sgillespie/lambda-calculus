@@ -27,6 +27,10 @@ spec = describe "prettyPrint" $ do
     prettyPrint (Abs "f" (TyVar "F") (Abs "x" (TyVar "X") (Var "x")))
       `shouldBe` "λ f:F x:X. x"
 
+  it "prints abstractions with composite types" $ 
+    prettyPrint (Abs "f" (TyArrow (TyVar "X") (TyVar "Y")) (Var "f"))
+      `shouldBe ` "λ f:(X->Y). f"
+
   it "prints nested type abstractions" $
     prettyPrint (TyAbs (TyVar "A") (TyAbs (TyVar "B") (Var "x")))
       `shouldBe` "Λ A B. x"

@@ -1,6 +1,8 @@
 {-# LANGUAGE FlexibleInstances #-}
 module Language.SystemF.Expression where
 
+import Data.Monoid
+
 import Language.Lambda.Util.PrettyPrint
 
 data SystemFExpr name ty
@@ -24,7 +26,7 @@ instance (PrettyPrint n, PrettyPrint t) => PrettyPrint (SystemFExpr n t) where
   prettyPrint = prettyPrint . pprExpr empty
 
 instance PrettyPrint n => PrettyPrint (Ty n) where
-  prettyPrint = prettyPrint . pprTy empty
+  prettyPrint = prettyPrint . pprTy empty True
 
 -- Same as prettyPrint, but we assume the same type for names and types. Useful
 -- for testing.
@@ -78,28 +80,34 @@ pprAbs :: (PrettyPrint n, PrettyPrint t)
 pprAbs pdoc name ty body = between vars' lambda' ". " (pprExpr pdoc body')
   where (vars, body') = uncurryAbs name ty body
         vars' = intercalate (map (uncurry pprArg) vars) " " empty
-        pprArg n t = prettyPrint n ++ ":" ++ prettyPrint t
         lambda' = [lambda, space]
+
+        pprArg n t = prettyPrint n ++ (':':pprArg' t)
+        pprArg' t@(TyVar _)     = prettyPrint t
+        pprArg' t@(TyArrow _ _) = prettyPrint $ betweenParens (pprTy empty False t) empty
 
 -- Pretty print types
 pprTy :: PrettyPrint n
       => PDoc String
+      -> Bool -- Add a space between arrows?
       -> Ty n
       -> PDoc String
-pprTy pdoc (TyVar n) = prettyPrint n `add` pdoc
-pprTy pdoc (TyArrow a b) = pprTyArrow pdoc a b
+pprTy pdoc space (TyVar n) = prettyPrint n `add` pdoc
+pprTy pdoc space (TyArrow a b) = pprTyArrow pdoc space a b
 
 pprTyArrow :: PrettyPrint n
            => PDoc String
+           -> Bool -- Add a space between arrows?
            -> Ty n
            -> Ty n
            -> PDoc String
-pprTyArrow pdoc a@(TyVar _) b = pprTyArrow' pdoc a b
-pprTyArrow pdoc a@(TyArrow _ _) b = pprTyArrow' pdoc a' b
-  where a' = betweenParens (pprTy empty a) empty
+pprTyArrow pdoc space a@(TyVar _) b = pprTyArrow' pdoc space a b
+pprTyArrow pdoc space a@(TyArrow _ _) b = pprTyArrow' pdoc space a' b
+  where a' = betweenParens (pprTy empty space a) empty
 
-pprTyArrow' pdoc a b = between arrow (prettyPrint a) (prettyPrint b) pdoc
-  where arrow = " -> " `add` empty
+pprTyArrow' pdoc space a b = between arrow (prettyPrint a) (prettyPrint b) pdoc
+  where arrow | space     = " -> " `add` empty
+              | otherwise = "->" `add` empty
 
 -- Pretty print a type abstraction
 pprTAbs :: (PrettyPrint n, PrettyPrint t)
