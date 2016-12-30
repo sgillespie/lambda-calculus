@@ -16,11 +16,11 @@ spec = describe "parseExpr" $ do
     parseExpr "(x)" `shouldBe` Right (Var "x")
 
   it "parses simple abstractions" $
-    parseExpr "\\x:T. x" `shouldBe` Right (Abs "x" "T" (Var "x"))
+    parseExpr "\\x:T. x" `shouldBe` Right (Abs "x" (TyVar "T") (Var "x"))
 
   it "parses nested abstractions" $
     parseExpr "\\a:A b:B. b" 
-      `shouldBe` Right (Abs "a" "A" (Abs "b" "B" (Var "b")))
+      `shouldBe` Right (Abs "a" (TyVar "A") (Abs "b" (TyVar "B") (Var "b")))
 
   it "parses simple applications" $
     parseExpr "f x" `shouldBe` Right (App (Var "f") (Var "x"))

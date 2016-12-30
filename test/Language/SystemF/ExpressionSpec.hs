@@ -15,20 +15,20 @@ spec = describe "prettyPrint" $ do
     prettyPrint' (App (Var "a") (Var "b")) `shouldBe` "a b"
 
   it "prints simple abstractions" $ 
-    prettyPrint (Abs "x" "T" (Var "x")) `shouldBe` "λ x:T. x"
+    prettyPrint (Abs "x" (TyVar "T") (Var "x")) `shouldBe` "λ x:T. x"
 
   it "prints simple type abstractions" $
-    prettyPrint (TyAbs "X" (Var "x")) `shouldBe` "Λ X. x"
+    prettyPrint (TyAbs (TyVar "X") (Var "x")) `shouldBe` "Λ X. x"
 
   it "prints simple type applications" $ 
-    prettyPrint (TyApp (Var "t") "T") `shouldBe` "t [T]"
+    prettyPrint' (TyApp (Var "t") (TyVar "T")) `shouldBe` "t [T]"
 
   it "prints nested abstractions" $
-    prettyPrint (Abs "f" "F" (Abs "x" "X" (Var "x")))
+    prettyPrint (Abs "f" (TyVar "F") (Abs "x" (TyVar "X") (Var "x")))
       `shouldBe` "λ f:F x:X. x"
 
   it "prints nested type abstractions" $
-    prettyPrint (TyAbs "A" (TyAbs "B" (Var "x")))
+    prettyPrint (TyAbs (TyVar "A") (TyAbs (TyVar "B") (Var "x")))
       `shouldBe` "Λ A B. x"
 
   it "prints nested applications" $
@@ -39,10 +39,10 @@ spec = describe "prettyPrint" $ do
     prettyPrint' (App (Var "w") (App (Var "x") (Var "y")))
       `shouldBe` "w (x y)"
 
-    prettyPrint (App (Abs "t" "T" (Var "t")) (Var "x"))
+    prettyPrint (App (Abs "t" (TyVar "T") (Var "t")) (Var "x"))
       `shouldBe` "(λ t:T. t) x"
 
-    prettyPrint (App (Abs "f" "F" (Var "f")) (Abs "g" "G" (Var "g")))
+    prettyPrint (App (Abs "f" (TyVar "F") (Var "f")) (Abs "g" (TyVar "G") (Var "g")))
       `shouldBe` "(λ f:F. f) (λ g:G. g)"
 
   it "prints simple types" $

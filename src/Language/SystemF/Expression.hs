@@ -1,23 +1,21 @@
 {-# LANGUAGE FlexibleInstances #-}
 module Language.SystemF.Expression where
 
-import Data.Monoid
-
 import Language.Lambda.Util.PrettyPrint
 
 data SystemFExpr name ty
   = Var name                                        -- Variable
   | App (SystemFExpr name ty) (SystemFExpr name ty) -- Application
-  | Abs name ty (SystemFExpr name ty)               -- Abstraction
-  | TyAbs ty (SystemFExpr name ty)                  -- Type Abstraction
+  | Abs name (Ty ty) (SystemFExpr name ty)          -- Abstraction
+  | TyAbs (Ty ty) (SystemFExpr name ty)             -- Type Abstraction
                                                     -- \X. body
 
-  | TyApp (SystemFExpr name ty) ty                  -- Type Application
+  | TyApp (SystemFExpr name ty) (Ty ty)             -- Type Application
                                                     -- x [X]
   deriving (Eq, Show)
 
 data Ty name
-  = TyVar name                      -- Type variable (T)
+  = TyVar name                  -- Type variable (T)
   | TyArrow (Ty name) (Ty name) -- Type arrow    (T -> U)
   deriving (Eq, Show)
 
@@ -36,7 +34,7 @@ prettyPrint' = prettyPrint
 -- Pretty print a system f expression
 pprExpr :: (PrettyPrint n, PrettyPrint t) 
         => PDoc String 
-        -> SystemFExpr n t 
+        -> SystemFExpr n t
         -> PDoc String
 pprExpr pdoc (Var n)        = prettyPrint n `add` pdoc
 pprExpr pdoc (App e1 e2)    = pprApp pdoc e1 e2
@@ -64,7 +62,7 @@ pprApp pdoc e1 e2
 pprTApp :: (PrettyPrint n, PrettyPrint t)
         => PDoc String
         -> SystemFExpr n t
-        -> t
+        -> Ty t
         -> PDoc String
 pprTApp pdoc expr ty = expr' `mappend` addSpace (between ty' "[" "]" empty)
   where expr' = pprExpr pdoc expr
@@ -74,7 +72,7 @@ pprTApp pdoc expr ty = expr' `mappend` addSpace (between ty' "[" "]" empty)
 pprAbs :: (PrettyPrint n, PrettyPrint t)
        => PDoc String
        -> n
-       -> t
+       -> Ty t
        -> SystemFExpr n t
        -> PDoc String
 pprAbs pdoc name ty body = between vars' lambda' ". " (pprExpr pdoc body')
@@ -106,7 +104,7 @@ pprTyArrow' pdoc a b = between arrow (prettyPrint a) (prettyPrint b) pdoc
 -- Pretty print a type abstraction
 pprTAbs :: (PrettyPrint n, PrettyPrint t)
         => PDoc String
-        -> t
+        -> Ty t
         -> SystemFExpr n t
         -> PDoc String
 pprTAbs pdoc ty body = between vars' lambda' ". " (pprExpr pdoc body')
@@ -114,12 +112,12 @@ pprTAbs pdoc ty body = between vars' lambda' ". " (pprExpr pdoc body')
         vars' = intercalate (map prettyPrint vars) " " empty
         lambda' = [upperLambda, space]
 
-uncurryAbs :: n -> t -> SystemFExpr n t -> ([(n, t)], SystemFExpr n t)
+uncurryAbs :: n -> Ty t -> SystemFExpr n t -> ([(n, Ty t)], SystemFExpr n t)
 uncurryAbs name ty = uncurry' [(name, ty)] 
   where uncurry' ns (Abs n' t' body') = uncurry' ((n', t'):ns) body'
         uncurry' ns body'             = (reverse ns, body')
 
-uncurryTAbs :: t -> SystemFExpr n t -> ([t], SystemFExpr n t)
+uncurryTAbs :: Ty t -> SystemFExpr n t -> ([Ty t], SystemFExpr n t)
 uncurryTAbs ty = uncurry' [ty]
   where uncurry' ts (TyAbs t' body') = uncurry' (t':ts) body'
         uncurry' ts body'            = (reverse ts, body')

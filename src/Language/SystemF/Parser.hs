@@ -25,7 +25,7 @@ var = Var <$> identifier
 
 abs :: Parser (SystemFExpr String String)
 abs = curry <$> idents <*> expr
-  where idents = symbol '\\' *> many1 ((,) <$> identifier <*> (symbol ':' *> identifier)) <* symbol '.'
+  where idents = symbol '\\' *> many1 ((,) <$> identifier <*> (symbol ':' *> (TyVar <$> identifier))) <* symbol '.'
         curry = flip . foldr . uncurry $ Abs
 
 abs' :: Parser [(String, String)]
