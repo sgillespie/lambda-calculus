@@ -19,16 +19,19 @@ parseType = parse (whitespace *> ty <* eof) ""
 
 -- Parse expressions
 expr :: Parser (SystemFExpr String String)
-expr = try app <|> term
+expr = try tyapp <|> try app <|> term
 
 app :: Parser (SystemFExpr String String)
 app = chainl1 term (return App)
 
+tyapp :: Parser (SystemFExpr String String)
+tyapp = TyApp
+      <$> term
+      <*> ty'
+  where ty' = symbol '[' *> ty <* symbol ']'
+
 term :: Parser (SystemFExpr String String)
-term = try abs 
-     <|> tyabs 
-     <|> var 
-     <|> parens expr
+term = try abs <|> tyabs <|> var <|> parens expr
 
 var :: Parser (SystemFExpr String String)
 var = Var <$> exprId

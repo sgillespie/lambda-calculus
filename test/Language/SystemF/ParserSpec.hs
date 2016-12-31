@@ -22,6 +22,9 @@ spec = do
     it "parses simple type abstractions" $
       parseExpr "\\X. x" `shouldBe` Right (TyAbs "X" (Var "x"))
 
+    it "parses simple type applications" $ 
+      parseExpr "x [T]" `shouldBe` Right (TyApp (Var "x") (TyVar "T"))
+
     it "parses nested abstractions" $
       parseExpr "\\a:A b:B. b" 
         `shouldBe` Right (Abs "a" (TyVar "A") (Abs "b" (TyVar "B") (Var "b")))
@@ -42,7 +45,8 @@ spec = do
             "(\\p:(X->Y->Z) x:X y:Y. y) (\\p:(A->B->C) x:B y:C. x)",
             "f (\\x:T. x)",
             "(\\ x:X . f x) g y",
-            "(\\f:(X->Y) . (\\ x:X y:Y. f x y) f x y) w x y"
+            "(\\f:(X->Y) . (\\ x:X y:Y. f x y) f x y) w x y",
+            "(\\x:T. x) [U]"
             ]
 
       mapM_ (flip shouldSatisfy isRight . parseExpr) exprs
