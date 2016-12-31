@@ -23,7 +23,9 @@ spec = do
       parseExpr "\\a:A b:B. b" 
         `shouldBe` Right (Abs "a" (TyVar "A") (Abs "b" (TyVar "B") (Var "b")))
 
-    it "parses abstractions with arrow types" pending
+    it "parses abstractions with arrow types" $
+      parseExpr "\\f:(T->U). f"
+        `shouldBe` Right (Abs "f" (TyArrow (TyVar "T") (TyVar "U")) (Var "f"))
 
     it "parses simple applications" $
       parseExpr "f x" `shouldBe` Right (App (Var "f") (Var "x"))
@@ -31,14 +33,28 @@ spec = do
     it "parses chained applications" $
       parseExpr "a b c" `shouldBe` Right (App (App (Var "a") (Var "b")) (Var "c"))
 
-    it "parses complex expressions"  $
-      pendingWith "Abstraction Not Implemented"
+    it "parses complex expressions"  $ do
+      let exprs = [
+            "\\f:(A->B) x:B. f x",
+            "(\\p:(X->Y->Z) x:X y:Y. y) (\\p:(A->B->C) x:B y:C. x)",
+            "f (\\x:T. x)",
+            "(\\ x:X . f x) g y",
+            "(\\f:(X->Y) . (\\ x:X y:Y. f x y) f x y) w x y"
+            ]
+
+      mapM_ (flip shouldSatisfy isRight . parseExpr) exprs
 
     it "does not parse trailing errors" $
       parseExpr "x +" `shouldSatisfy` isLeft
 
-    it "ignores whitespace" $
-      pendingWith "Abstraction Not Implemented"
+    it "ignores whitespace" $ do
+      let exprs = [
+            " x ",
+            " \\ x : X. x ",
+            " ( x ) "
+            ]
+
+      mapM_ (flip shouldSatisfy isRight . parseExpr) exprs
   
   describe "parseType" $ do
     it "parses simple variables" $

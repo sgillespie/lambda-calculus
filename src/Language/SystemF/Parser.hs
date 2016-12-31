@@ -34,7 +34,7 @@ abs :: Parser (SystemFExpr String String)
 abs = curry 
     <$> (symbol '\\' *> many1 args <* symbol '.') 
     <*> expr
-  where args = (,) <$> (identifier <* symbol ':') <*> (TyVar <$> identifier)
+  where args = (,) <$> (identifier <* symbol ':') <*> ty
         curry = flip . foldr . uncurry $ Abs
 
 -- Parse type expressions
