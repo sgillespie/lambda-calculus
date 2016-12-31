@@ -33,7 +33,7 @@ spec = do
     
     it "reduces simple applications" $ do
       let e1 = Abs "x" (Var "x")
-          e2 = (Var "y")
+          e2 = Var "y"
       betaReduce' e1 e2 `shouldBe` Var "y"
 
     it "reduces nested abstractions" $ do
@@ -97,14 +97,14 @@ spec = do
       etaConvert expr `shouldBe` expr
 
   describe "freeVarsOf" $ do
-    it "Returns simple vars" $ do
+    it "Returns simple vars" $
       freeVarsOf (Var "x") `shouldBe` ["x"]
   
-    it "Does not return bound vars" $ do
+    it "Does not return bound vars" $
       freeVarsOf (Abs "x" (Var "x")) `shouldBe` []
 
-    it "Returns nested simple vars" $ do
+    it "Returns nested simple vars" $
       freeVarsOf (Abs "x" (Var "y")) `shouldBe` ["y"]
 
-    it "Returns applied simple vars" $ do
+    it "Returns applied simple vars" $
       freeVarsOf (App (Var "x") (Var "y")) `shouldBe` ["x", "y"]
