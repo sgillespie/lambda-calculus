@@ -19,6 +19,9 @@ spec = do
     it "parses simple abstractions" $
       parseExpr "\\x:T. x" `shouldBe` Right (Abs "x" (TyVar "T") (Var "x"))
 
+    it "parses simple type abstractions" $
+      parseExpr "\\X. x" `shouldBe` Right (TyAbs "X" (Var "x"))
+
     it "parses nested abstractions" $
       parseExpr "\\a:A b:B. b" 
         `shouldBe` Right (Abs "a" (TyVar "A") (Abs "b" (TyVar "B") (Var "b")))

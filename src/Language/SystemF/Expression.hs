@@ -9,7 +9,7 @@ data SystemFExpr name ty
   = Var name                                        -- Variable
   | App (SystemFExpr name ty) (SystemFExpr name ty) -- Application
   | Abs name (Ty ty) (SystemFExpr name ty)          -- Abstraction
-  | TyAbs (Ty ty) (SystemFExpr name ty)             -- Type Abstraction
+  | TyAbs ty (SystemFExpr name ty)                  -- Type Abstraction
                                                     -- \X. body
 
   | TyApp (SystemFExpr name ty) (Ty ty)             -- Type Application
@@ -117,7 +117,7 @@ pprTyArrow' space a b = a <> arrow <> b
 -- Pretty print a type abstraction
 pprTAbs :: (PrettyPrint n, PrettyPrint t)
         => PDoc String
-        -> Ty t
+        -> t
         -> SystemFExpr n t
         -> PDoc String
 pprTAbs pdoc ty body = between vars' lambda' ". " (pprExpr pdoc body')
@@ -130,7 +130,7 @@ uncurryAbs name ty = uncurry' [(name, ty)]
   where uncurry' ns (Abs n' t' body') = uncurry' ((n', t'):ns) body'
         uncurry' ns body'             = (reverse ns, body')
 
-uncurryTAbs :: Ty t -> SystemFExpr n t -> ([Ty t], SystemFExpr n t)
+uncurryTAbs :: t -> SystemFExpr n t -> ([t], SystemFExpr n t)
 uncurryTAbs ty = uncurry' [ty]
   where uncurry' ts (TyAbs t' body') = uncurry' (t':ts) body'
         uncurry' ts body'            = (reverse ts, body')

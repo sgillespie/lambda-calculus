@@ -25,17 +25,25 @@ app :: Parser (SystemFExpr String String)
 app = chainl1 term (return App)
 
 term :: Parser (SystemFExpr String String)
-term = abs <|> var <|> parens expr
+term = try abs 
+     <|> tyabs 
+     <|> var 
+     <|> parens expr
 
 var :: Parser (SystemFExpr String String)
-var = Var <$> identifier
+var = Var <$> exprId
 
 abs :: Parser (SystemFExpr String String)
 abs = curry 
     <$> (symbol '\\' *> many1 args <* symbol '.') 
     <*> expr
-  where args = (,) <$> (identifier <* symbol ':') <*> ty
+  where args = (,) <$> (exprId <* symbol ':') <*> ty
         curry = flip . foldr . uncurry $ Abs
+
+tyabs :: Parser (SystemFExpr String String)
+tyabs = curry <$> args <*> expr
+  where args = symbol '\\' *> many1 typeId <* symbol '.'
+        curry = flip (foldr TyAbs)
 
 -- Parse type expressions
 ty :: Parser (Ty String)
@@ -48,15 +56,19 @@ tyterm :: Parser (Ty String)
 tyterm = tyvar <|> parens ty
 
 tyvar :: Parser (Ty String)
-tyvar = TyVar <$> identifier
+tyvar = TyVar <$> typeId
 
 parens :: Parser a -> Parser a
 parens p = symbol '(' *> p <* symbol ')'
 
-identifier :: Parser String
-identifier = lexeme ((:) <$> first <*> many rest)
-  where first = letter <|> char '_'
+identifier :: Parser Char -> Parser String
+identifier firstChar = lexeme ((:) <$> first <*> many rest)
+  where first = firstChar <|> char '_'
         rest = first <|> digit
+
+typeId, exprId :: Parser String
+typeId = identifier upper
+exprId = identifier lower
 
 whitespace :: Parser ()
 whitespace = void . many . oneOf $ " \t"
