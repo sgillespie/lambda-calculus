@@ -101,11 +101,16 @@ pprTyArrow :: PrettyPrint n
            -> Ty n
            -> Ty n
            -> PDoc String
-pprTyArrow pdoc space a@(TyVar _) b = pprTyArrow' pdoc space a b
-pprTyArrow pdoc space a@(TyArrow _ _) b = pprTyArrow' pdoc space a' b
-  where a' = betweenParens (pprTy empty space a) empty
+pprTyArrow pdoc space a@(TyVar _) b = pprTyArrow' space (pprTy pdoc space a) 
+                                                        (pprTy pdoc space b)
+pprTyArrow pdoc space (TyArrow a1 a2) b = pprTyArrow' space a' (pprTy pdoc space b)
+  where a' = betweenParens (pprTyArrow pdoc space a1 a2) empty
 
-pprTyArrow' pdoc space a b = between arrow (prettyPrint a) (prettyPrint b) pdoc
+pprTyArrow' :: Bool -- Add a space between arrows?
+            -> PDoc String
+            -> PDoc String
+            -> PDoc String
+pprTyArrow' space a b = a <> arrow <> b
   where arrow | space     = " -> " `add` empty
               | otherwise = "->" `add` empty
 
