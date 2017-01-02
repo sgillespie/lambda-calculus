@@ -61,6 +61,7 @@ cliParser :: Parser CliOptions
 cliParser = CliOptions 
   <$> flag untyped systemf (long "system-f" <> 
                             short 'f' <> 
+                            internal <>    -- this is a secret feature
                             help "Use the System F interpreter")
 
   <*> switch (long "version" <> 
