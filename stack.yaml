@@ -5,4 +5,4 @@ packages:
 extra-deps:
 - Shellac-0.9.9
 - Shellac-readline-0.9.9
-resolver: lts-7.0
+resolver: lts-7.14
