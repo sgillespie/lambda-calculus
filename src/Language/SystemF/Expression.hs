@@ -1,4 +1,3 @@
-{-# LANGUAGE FlexibleInstances #-}
 module Language.SystemF.Expression where
 
 import Data.Monoid
