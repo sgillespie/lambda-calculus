@@ -73,3 +73,9 @@ spec = describe "prettyPrint" $ do
     prettyPrint (TyForAll "A" (TyArrow (TyVar "A") (TyVar "A")))
       `shouldBe` "forall A. A -> A"
 
+  it "prints nested forall types" $
+    prettyPrint (TyForAll "W" 
+                  (TyForAll "X" 
+                    (TyArrow (TyVar "W") (TyArrow (TyVar "X") (TyVar "Y")))))
+      `shouldBe` "forall W. forall X. W -> X -> Y"
+
