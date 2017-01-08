@@ -58,6 +58,9 @@ spec = describe "prettyPrint" $ do
   it "print simple arrow types" $
     prettyPrint (TyArrow (TyVar "A") (TyVar "B")) `shouldBe` "A -> B"
 
+  it "prints simple forall types" $
+    prettyPrint (TyForAll "X" (TyVar "X")) `shouldBe` "forall X. X"
+
   it "prints chained arrow types" $
     prettyPrint (TyArrow (TyVar "X") (TyArrow (TyVar "Y") (TyVar "Z")))
       `shouldBe` "X -> Y -> Z"
@@ -65,3 +68,8 @@ spec = describe "prettyPrint" $ do
   it "prints nested arrow types" $
     prettyPrint (TyArrow (TyArrow (TyVar "T") (TyVar "U")) (TyVar "V"))
       `shouldBe` "(T -> U) -> V"
+
+  it "prints complex forall types" $
+    prettyPrint (TyForAll "A" (TyArrow (TyVar "A") (TyVar "A")))
+      `shouldBe` "forall A. A -> A"
+

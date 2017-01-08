@@ -18,6 +18,7 @@ data SystemFExpr name ty
 data Ty name
   = TyVar name                  -- Type variable (T)
   | TyArrow (Ty name) (Ty name) -- Type arrow    (T -> U)
+  | TyForAll name (Ty name)     -- Universal type (forall T. X)
   deriving (Eq, Show)
 
 -- Pretty printing
@@ -93,6 +94,7 @@ pprTy :: PrettyPrint n
       -> PDoc String
 pprTy pdoc space (TyVar n) = prettyPrint n `add` pdoc
 pprTy pdoc space (TyArrow a b) = pprTyArrow pdoc space a b
+pprTy pdoc _     (TyForAll n t) =  pprTyForAll pdoc n t
 
 pprTyArrow :: PrettyPrint n
            => PDoc String
@@ -112,6 +114,14 @@ pprTyArrow' :: Bool -- Add a space between arrows?
 pprTyArrow' space a b = a <> arrow <> b
   where arrow | space     = " -> " `add` empty
               | otherwise = "->" `add` empty
+
+pprTyForAll :: PrettyPrint n
+            => PDoc String
+            -> n
+            -> Ty n
+            -> PDoc String
+pprTyForAll pdoc n t = prefix <> prettyPrint t `add` pdoc
+  where prefix = between (prettyPrint n `add` empty) "forall " ". " empty
 
 -- Pretty print a type abstraction
 pprTAbs :: (PrettyPrint n, PrettyPrint t)
