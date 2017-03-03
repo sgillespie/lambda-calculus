@@ -47,7 +47,10 @@ spec = describe "typecheck" $ do
 
     tc [] ctx (App (Var "f") (Var "b")) `shouldSatisfy` isLeft
 
-  it "typechecks simple type abstractions" $ do
-    pendingWith "Not implemented"
+  it "typechecks simple type abstractions" $
     tc ["A"] [] (TyAbs "X" (Var "x")) `shouldBe` Right (TyForAll "X" (TyVar "A"))
+
+  it "typechecks type abstractions with simple abstraction" $
+    tc [] [] (TyAbs "X" (Abs "x" (TyVar "X") (Var "X"))) `shouldBe`
+      Right (TyForAll "X" (TyArrow (TyVar "X") (TyVar "X")))
 

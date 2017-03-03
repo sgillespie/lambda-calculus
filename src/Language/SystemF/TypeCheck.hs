@@ -9,40 +9,40 @@ import Language.SystemF.Expression
 type UniqueSupply n = [n]
 type Context n t = Map n t
 
-typecheck :: (Ord n, Eq t, PrettyPrint t)
-          => UniqueSupply t 
-          -> Context n (Ty t)
-          -> SystemFExpr n t 
-          -> Either String (Ty t)
+typecheck :: (Ord n, Eq n, PrettyPrint n)
+          => UniqueSupply n 
+          -> Context n (Ty n)
+          -> SystemFExpr n n 
+          -> Either String (Ty n)
 typecheck uniqs ctx (Var v)        = tcVar uniqs ctx v
 typecheck uniqs ctx (Abs n t body) = tcAbs uniqs ctx n t body
 typecheck uniqs ctx (App e1 e2)    = tcApp uniqs ctx e1 e2
 typecheck uniqs ctx (TyAbs t body) = tcTyAbs uniqs ctx t body
 typecheck _     _   _       = undefined
 
-tcVar :: (Ord n, Eq t, PrettyPrint t)
-      => UniqueSupply t
-      -> Context n (Ty t)
+tcVar :: (Ord n, Eq n, PrettyPrint n)
+      => UniqueSupply n
+      -> Context n (Ty n)
       -> n
-      -> Either String (Ty t)
+      -> Either String (Ty n)
 tcVar uniqs ctx var = maybe (TyVar <$> unique uniqs) return (lookup var ctx)
 
-tcAbs :: (Ord n, Eq t, PrettyPrint t)
-      => UniqueSupply t
-      -> Context n (Ty t)
+tcAbs :: (Ord n, Eq n, PrettyPrint n)
+      => UniqueSupply n
+      -> Context n (Ty n)
       -> n
-      -> Ty t
-      -> SystemFExpr n t
-      -> Either String (Ty t)
+      -> Ty n
+      -> SystemFExpr n n
+      -> Either String (Ty n)
 tcAbs uniqs ctx name ty body = TyArrow ty <$> typecheck uniqs ctx' body
   where ctx' = insert name ty ctx
 
-tcApp :: (Ord n, Eq t, PrettyPrint t)
-      => UniqueSupply t
-      -> Context n (Ty t)
-      -> SystemFExpr n t
-      -> SystemFExpr n t
-      -> Either String (Ty t)
+tcApp :: (Ord n, Eq n, PrettyPrint n)
+      => UniqueSupply n
+      -> Context n (Ty n)
+      -> SystemFExpr n n
+      -> SystemFExpr n n
+      -> Either String (Ty n)
 tcApp uniqs ctx e1 e2 = do
     t1 <- typecheck uniqs ctx e1
     t2 <- typecheck uniqs ctx e2
@@ -58,13 +58,14 @@ tcApp uniqs ctx e1 e2 = do
         arrow (TyArrow t1 t2) = return (t1, t2)
         arrow t               = Left t
 
-tcTyAbs :: (Ord n, Eq t, PrettyPrint t)
-        => UniqueSupply t
-        -> Context n (Ty t)
-        -> t
-        -> SystemFExpr n t
-        -> Either String (Ty t)
-tcTyAbs uniqs ctx ty body = undefined
+tcTyAbs :: (Ord n, Eq n, PrettyPrint n)
+        => UniqueSupply n
+        -> Context n (Ty n)
+        -> n
+        -> SystemFExpr n n
+        -> Either String (Ty n)
+tcTyAbs uniqs ctx ty body = TyForAll ty <$> typecheck uniqs ctx' body
+  where ctx' = insert ty (TyVar ty) ctx
 
 -- Utilities
 unique :: UniqueSupply t
