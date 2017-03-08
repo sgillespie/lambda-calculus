@@ -18,7 +18,7 @@ typecheck uniqs ctx (Var v)        = tcVar uniqs ctx v
 typecheck uniqs ctx (Abs n t body) = tcAbs uniqs ctx n t body
 typecheck uniqs ctx (App e1 e2)    = tcApp uniqs ctx e1 e2
 typecheck uniqs ctx (TyAbs t body) = tcTyAbs uniqs ctx t body
-typecheck _     _   _       = undefined
+typecheck uniqs ctx (TyApp e ty)   = tcTyApp uniqs ctx e ty
 
 tcVar :: (Ord n, Eq n, PrettyPrint n)
       => UniqueSupply n
@@ -67,11 +67,47 @@ tcTyAbs :: (Ord n, Eq n, PrettyPrint n)
 tcTyAbs uniqs ctx ty body = TyForAll ty <$> typecheck uniqs ctx' body
   where ctx' = insert ty (TyVar ty) ctx
 
+tcTyApp :: (Ord n, Eq n, PrettyPrint n)
+        => UniqueSupply n
+        -> Context n (Ty n)
+        -> SystemFExpr n n
+        -> Ty n
+        -> Either String (Ty n)
+tcTyApp uniqs ctx (TyAbs t expr) ty = typecheck uniqs ctx expr'
+  where expr' = sub t ty expr
+tcTyApp uniqs ctx expr ty = typecheck uniqs ctx expr
+
 -- Utilities
 unique :: UniqueSupply t
        -> Either String t
 unique (u:_) = return u
 unique _     = fail "Unique supply ran out"
+
+sub :: Eq n
+    => n
+    -> Ty n
+    -> SystemFExpr n n
+    -> SystemFExpr n n
+sub name ty (App e1 e2)   = App (sub name ty e1) (sub name ty e2)
+sub name ty (Abs n ty' e) = Abs n (subTy name ty ty') (sub name ty e)
+sub name ty (TyAbs ty' e) = TyAbs ty' (sub name ty e) 
+sub name ty (TyApp e ty') = TyApp (sub name ty e) (subTy name ty ty')
+sub name ty expr = expr
+
+subTy :: Eq n
+      => n
+      -> Ty n
+      -> Ty n
+      -> Ty n
+subTy name ty (TyArrow t1 t2) 
+  = TyArrow (subTy name ty t1) (subTy name ty t2)
+subTy name ty ty'@(TyVar name') 
+  | name == name' = ty
+  | otherwise     = ty'
+subTy name t1 t2@(TyForAll name' t2') 
+  | name == name' = t2
+  | otherwise     = TyForAll name' (subTy name t2 t2')
+
 
 tyMismatchMsg :: (PrettyPrint t, PrettyPrint t')
               => t
