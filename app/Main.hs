@@ -2,6 +2,7 @@ module Main where
 
 import Data.Version
 
+import Data.Semigroup
 import Options.Applicative hiding (ParseError)
 import System.Console.Shell
 import System.Console.Shell.ShellMonad

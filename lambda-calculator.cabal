@@ -26,7 +26,7 @@ library
                        Language.SystemF.Expression,
                        Language.SystemF.Parser,
                        Language.SystemF.TypeCheck
-  build-depends:       base <= 5,
+  build-depends:       base >= 4.9,
                        containers,
                        parsec
   default-language:    Haskell2010
@@ -36,9 +36,9 @@ executable lambda-calculator
   main-is:             Main.hs
   other-modules:       Paths_lambda_calculator
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
-  build-depends:       base,
+  build-depends:       base >= 4.9,
                        lambda-calculator,
-                       optparse-applicative < 0.13,
+                       optparse-applicative >= 0.13,
                        Shellac,
                        Shellac-readline
   default-language:    Haskell2010
