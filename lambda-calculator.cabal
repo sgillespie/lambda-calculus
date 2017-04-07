@@ -26,7 +26,7 @@ library
                        Language.SystemF.Expression,
                        Language.SystemF.Parser,
                        Language.SystemF.TypeCheck
-  build-depends:       base >= 4.9,
+  build-depends:       base >= 4.9 && < 5,
                        containers,
                        parsec
   default-language:    Haskell2010
@@ -62,7 +62,7 @@ test-suite lambda-calculus-test
                        Language.SystemF.ExpressionSpec,
                        Language.SystemF.ParserSpec,
                        Language.SystemF.TypeCheckSpec
-  build-depends:       base <= 5,
+  build-depends:       base < 5,
                        lambda-calculator,
                        containers,
                        hspec,
