@@ -10,8 +10,8 @@ implementing functional programming languages.
 # Introduction to Lambda Calculus
 Introductory material is provided. They can be found at
 
-[doc/lambda-calculus.md](doc/lambda-calculus.md)
-[doc/system-f.md](doc/system-f.md)
+ * [doc/lambda-calculus.md](doc/lambda-calculus.md)
+ * [doc/system-f.md](doc/system-f.md)
 
 ## Extended Examples
 More examples can be found in the test-suite, located at
@@ -19,14 +19,14 @@ More examples can be found in the test-suite, located at
 [test/Language/Lambda/Examples](test/Language/Lambda/Examples)
 
 # Implementation
-A simple implementation of lambda calculus is included. It is written in Haskell
-and is implemented to be as easy to follow, at the possible expense of performance.
+A simple implementation of the untyped lambda calculus is included. It is written in 
+Haskell and is implemented to be as easy to follow, at the possible expense of 
+performance.
 
 ## Building
 In order to build, you will need
 
- * GHC
- * cabal-install
+ * GHC >= 8
  * stack
 
 Build:
