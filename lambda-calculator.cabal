@@ -1,5 +1,5 @@
 name:                lambda-calculator
-version:             1.1.1
+version:             2.0.0
 synopsis:            A lambda calculus interpreter
 description:         Please see README.md
 homepage:            https://github.com/sgillespie/lambda-calculus#readme
