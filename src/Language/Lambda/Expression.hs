@@ -1,7 +1,7 @@
 {-# LANGUAGE FlexibleInstances #-}
 module Language.Lambda.Expression where
 
-import Prelude hiding (abs, uncurry)
+import Prelude hiding (uncurry)
 
 import Language.Lambda.Util.PrettyPrint
 

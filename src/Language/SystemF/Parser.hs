@@ -4,6 +4,7 @@ module Language.SystemF.Parser (
   ) where
 
 import Control.Monad
+import Data.Functor
 import Prelude hiding (abs)
 
 import Text.Parsec
@@ -53,7 +54,7 @@ ty :: Parser (Ty String)
 ty = try arrow
 
 arrow :: Parser (Ty String)
-arrow = chainr1 tyterm (symbol' "->" *> return TyArrow)
+arrow = chainr1 tyterm (symbol' "->" $> TyArrow)
 
 tyterm :: Parser (Ty String)
 tyterm = tyvar <|> parens ty

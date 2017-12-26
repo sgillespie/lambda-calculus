@@ -1,7 +1,7 @@
 module Language.Lambda.Parser (parseExpr) where
 
 import Control.Monad
-import Prelude hiding (abs, curry, id)
+import Prelude hiding (abs, curry)
 
 import Text.Parsec
 import Text.Parsec.String
