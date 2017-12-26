@@ -1,0 +1,68 @@
+name: lambda-calculator
+version: '2.0.0'
+synopsis: A lambda calculus interpreter
+description: Please see README.md
+category: LambdaCalculus,Language,Teaching
+author: Sean D Gillespie
+maintainer: sean@mistersg.net
+copyright: 2016 Sean Gillespie
+license: MIT
+github: sgillespie/lambda-calculus
+
+dependencies:
+  - base >= 4.9 && < 5
+
+library:
+  source-dirs: src
+  exposed-modules:
+    - Language.Lambda
+    - Language.Lambda.Expression
+    - Language.Lambda.Eval
+    - Language.Lambda.Parser
+    - Language.Lambda.Util.PrettyPrint
+    - Language.SystemF
+    - Language.SystemF.Expression
+    - Language.SystemF.Parser
+    - Language.SystemF.TypeCheck
+  dependencies:
+    - containers
+    - parsec
+  
+executables:
+  lambda-calculator:
+    main: Main.hs
+    source-dirs: app
+    ghc-options:
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
+    dependencies:
+      - lambda-calculator
+      - optparse-applicative >=0.13
+      - Shellac
+      - Shellac-readline
+    
+tests:
+  lambda-calculus-test:
+    main: Spec.hs
+    source-dirs: test
+    ghc-options:
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
+    dependencies:
+      - lambda-calculator
+      - containers
+      - hspec
+      - HUnit
+      
+  lambda-calculus-lint:
+    main: HLint.hs
+    source-dirs: scripts
+    other-modules: []
+    ghc-options:
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
+    dependencies:
+      - hlint

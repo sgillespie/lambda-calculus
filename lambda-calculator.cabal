@@ -1,84 +1,100 @@
-name:                lambda-calculator
-version:             2.0.0
-synopsis:            A lambda calculus interpreter
-description:         Please see README.md
-homepage:            https://github.com/sgillespie/lambda-calculus#readme
-license:             MIT
-license-file:        LICENSE
-author:              Sean D Gillespie
-maintainer:          sean@mistersg.net
-copyright:           2016 Sean Gillespie
-category:            LambdaCalculus,Language,Teaching
-build-type:          Simple
--- extra-source-files:
-cabal-version:       >=1.10
+-- This file has been generated from package.yaml by hpack version 0.21.2.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 9a56fe4c7e5a1adfc4da3434edc5d4540a51680a8c8023849d39866eb7602ccb
 
-library
-  hs-source-dirs:      src
-  exposed-modules:     Language.Lambda,
-                       Language.Lambda.Expression,
-                       Language.Lambda.Eval,
-                       Language.Lambda.Parser,
-
-                       Language.Lambda.Util.PrettyPrint,
-
-                       Language.SystemF,
-                       Language.SystemF.Expression,
-                       Language.SystemF.Parser,
-                       Language.SystemF.TypeCheck
-  build-depends:       base >= 4.9 && < 5,
-                       containers,
-                       parsec
-  default-language:    Haskell2010
-
-executable lambda-calculator
-  hs-source-dirs:      app
-  main-is:             Main.hs
-  other-modules:       Paths_lambda_calculator
-  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
-  build-depends:       base >= 4.9 && < 5,
-                       lambda-calculator,
-                       optparse-applicative >= 0.13,
-                       Shellac,
-                       Shellac-readline
-  default-language:    Haskell2010
-
-test-suite lambda-calculus-test
-  type:                exitcode-stdio-1.0
-  hs-source-dirs:      test
-  main-is:             Spec.hs
-  other-modules:       Language.LambdaSpec,
-                       Language.Lambda.Examples.BoolSpec,
-                       Language.Lambda.Examples.NatSpec,
-                       Language.Lambda.Examples.PairSpec,
-                       Language.Lambda.ExpressionSpec,
-                       Language.Lambda.EvalSpec,
-                       Language.Lambda.HspecUtils,
-                       Language.Lambda.ParserSpec,
-
-                       Language.Lambda.Util.PrettyPrintSpec,
-
-                       Language.SystemFSpec,
-                       Language.SystemF.ExpressionSpec,
-                       Language.SystemF.ParserSpec,
-                       Language.SystemF.TypeCheckSpec
-  build-depends:       base < 5,
-                       lambda-calculator,
-                       containers,
-                       hspec,
-                       HUnit
-  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
-  default-language:    Haskell2010
-
-test-suite lambda-calculus-lint
-  type:                exitcode-stdio-1.0
-  hs-source-dirs:      test
-  main-is:             HLint.hs
-  build-depends:       base < 5,
-                       hlint
-  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
-  default-language:    Haskell2010
+name:           lambda-calculator
+version:        2.0.0
+synopsis:       A lambda calculus interpreter
+description:    Please see README.md
+category:       LambdaCalculus,Language,Teaching
+homepage:       https://github.com/sgillespie/lambda-calculus#readme
+bug-reports:    https://github.com/sgillespie/lambda-calculus/issues
+author:         Sean D Gillespie
+maintainer:     sean@mistersg.net
+copyright:      2016 Sean Gillespie
+license:        MIT
+license-file:   LICENSE
+build-type:     Simple
+cabal-version:  >= 1.10
 
 source-repository head
-  type:     git
+  type: git
   location: https://github.com/sgillespie/lambda-calculus
+
+library
+  exposed-modules:
+      Language.Lambda
+      Language.Lambda.Expression
+      Language.Lambda.Eval
+      Language.Lambda.Parser
+      Language.Lambda.Util.PrettyPrint
+      Language.SystemF
+      Language.SystemF.Expression
+      Language.SystemF.Parser
+      Language.SystemF.TypeCheck
+  other-modules:
+      Paths_lambda_calculator
+  hs-source-dirs:
+      src
+  build-depends:
+      base >=4.9 && <5
+    , containers
+    , parsec
+  default-language: Haskell2010
+
+executable lambda-calculator
+  main-is: Main.hs
+  other-modules:
+      Paths_lambda_calculator
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      Shellac
+    , Shellac-readline
+    , base >=4.9 && <5
+    , lambda-calculator
+    , optparse-applicative >=0.13
+  default-language: Haskell2010
+
+test-suite lambda-calculus-lint
+  type: exitcode-stdio-1.0
+  main-is: HLint.hs
+  hs-source-dirs:
+      scripts
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.9 && <5
+    , hlint
+  default-language: Haskell2010
+
+test-suite lambda-calculus-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Language.Lambda.EvalSpec
+      Language.Lambda.Examples.BoolSpec
+      Language.Lambda.Examples.NatSpec
+      Language.Lambda.Examples.PairSpec
+      Language.Lambda.ExpressionSpec
+      Language.Lambda.HspecUtils
+      Language.Lambda.ParserSpec
+      Language.Lambda.Util.PrettyPrintSpec
+      Language.LambdaSpec
+      Language.SystemF.ExpressionSpec
+      Language.SystemF.ParserSpec
+      Language.SystemF.TypeCheckSpec
+      Language.SystemFSpec
+      Paths_lambda_calculator
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      HUnit
+    , base >=4.9 && <5
+    , containers
+    , hspec
+    , lambda-calculator
+  default-language: Haskell2010
