@@ -6,7 +6,7 @@ import Data.Semigroup
 import Options.Applicative hiding (ParseError)
 import System.Console.Shell
 import System.Console.Shell.ShellMonad
-import System.Console.Shell.Backend.Readline (readlineBackend)
+import System.Console.Shell.Backend.Haskeline (haskelineBackend)
 
 import qualified Paths_lambda_calculator as P
 
@@ -73,7 +73,7 @@ cliParser = CliOptions
 runShell' :: CliOptions -> IO ()
 runShell' CliOptions{version=True} = putStrLn version'
 runShell' CliOptions{language=Eval lang eval} 
-  = runShell (mkShellDesc lang eval) readlineBackend ()
+  = runShell (mkShellDesc lang eval) haskelineBackend ()
 
 mkShellDesc :: Language 
             -> (String -> Result String)

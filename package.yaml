@@ -40,7 +40,7 @@ executables:
       - lambda-calculator
       - optparse-applicative >=0.13
       - Shellac
-      - Shellac-readline
+      - Shellac-haskeline
     
 tests:
   lambda-calculus-test:

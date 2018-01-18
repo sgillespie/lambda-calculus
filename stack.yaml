@@ -1,9 +1,6 @@
-flags: {}
-extra-package-dbs: []
+resolver: lts-10.3
 packages:
-- '.'
+  - '.'
 extra-deps:
-- Shellac-0.9.9
-- Shellac-readline-0.9.9
-- readline-1.0.3.0
-resolver: lts-10.0
+  - Shellac-0.9.9
+  - Shellac-haskeline-0.2.1

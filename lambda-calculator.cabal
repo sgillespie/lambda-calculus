@@ -2,7 +2,7 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 9a56fe4c7e5a1adfc4da3434edc5d4540a51680a8c8023849d39866eb7602ccb
+-- hash: 797b677552c81b80399ac8b69e2e398479887a332862d9878a7c508a259975ee
 
 name:           lambda-calculator
 version:        2.0.0
@@ -53,7 +53,7 @@ executable lambda-calculator
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       Shellac
-    , Shellac-readline
+    , Shellac-haskeline
     , base >=4.9 && <5
     , lambda-calculator
     , optparse-applicative >=0.13
