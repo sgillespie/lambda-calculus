@@ -37,6 +37,7 @@ executables:
       - -rtsopts
       - -with-rtsopts=-N
     dependencies:
+      - containers
       - lambda-calculator
       - optparse-applicative >=0.13
       - Shellac

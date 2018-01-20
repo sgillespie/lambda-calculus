@@ -8,55 +8,64 @@ import System.Console.Shell
 import System.Console.Shell.ShellMonad
 import System.Console.Shell.Backend.Haskeline (haskelineBackend)
 
+import qualified Data.Map as Map
 import qualified Paths_lambda_calculator as P
 
-import Language.Lambda
 import Language.Lambda.Util.PrettyPrint
-import Language.SystemF
+
+import qualified Language.Lambda as Lambda
+import qualified Language.SystemF as SystemF
 
 main :: IO ()
 main = execParser opts >>= runShell'
   where opts = info (helper <*> cliParser)
                     (briefDesc <> progDesc "A Lambda Calculus Interpreter")
 
--- Option Parsing
+-- | Option Parsing
 data CliOptions = CliOptions {
   language :: Eval Language,
   version :: Bool
-  }
+}
 
--- Supported Languages:
+-- | Supported Languages:
 -- 
---  * Untyped Lambda Calculus
---  * System F
+--    * Untyped Lambda Calculus
+--    * System F
 data Language 
   = Untyped
   | SystemF
 
--- The result of an evaluation
-type Result a = Either a -- An error
-                       a -- The result
+-- | Globals are Maps that map names to expressions.
+data Globals n t
+  = GlobalsUntyped (Map.Map n (Lambda.LambdaExpr n))
+  | GlobalsSystemF (Map.Map n (SystemF.SystemFExpr n t))
 
--- Represent a language together with its evaluation function
-data Eval a = Eval a (String -> Result String)
+-- | The result of an evaluation
+type Result a state = Either a           -- ^ An error
+                             (a, state)  -- ^ The result along with its state
 
-untyped :: Eval Language
+-- | Represent a language together with its evaluation function
+data Eval a = Eval a (String -> Result String (Globals String String))
+
+untyped :: Eval Language 
 untyped = Eval Untyped eval
-  where eval = fromEvalString Language.Lambda.evalString
+  where eval = fromEvalString Lambda.evalString
 
 systemf :: Eval Language
 systemf = Eval SystemF eval
-  where eval = fromEvalString Language.SystemF.evalString
+  where eval = fromEvalString SystemF.evalString
 
--- Take a typed evaluation function and return a function that returns a result
+-- | Take a typed evaluation function and return a function that returns a result
 -- 
--- For example:
---   (String -> Either ParseError (LambdaExpr String)) -> (String -> Result String)
---   (String -> Either ParseError (SystemFExpr String String)) -> (String -> Result String)
+--   For example:
+--     (String -> Either ParseError (LambdaExpr String)) -> (String -> Result String)
+--     (String -> Either ParseError (SystemFExpr String String)) -> (String -> Result String)
 fromEvalString :: (Show s, PrettyPrint p)
                => (String -> Either s p)
-               -> (String -> Result String)
-fromEvalString f = either (Left . show) (Right . prettyPrint) . f
+               -> (String -> Result String (Globals String String))
+fromEvalString f = either (Left . show) (Right . toResult) . f
+  -- TODO[sgillespie]: Remove placeholder below
+  where toResult expr = (prettyPrint expr, GlobalsUntyped Map.empty)
 
 cliParser :: Parser CliOptions
 cliParser = CliOptions 
@@ -69,14 +78,14 @@ cliParser = CliOptions
               short 'v' <> 
               help "Print the version")
 
--- Interactive Shell
+-- | Interactive Shell
 runShell' :: CliOptions -> IO ()
 runShell' CliOptions{version=True} = putStrLn version'
 runShell' CliOptions{language=Eval lang eval} 
   = runShell (mkShellDesc lang eval) haskelineBackend ()
 
 mkShellDesc :: Language 
-            -> (String -> Result String)
+            -> (String -> Result String (Globals String String))
             -> ShellDescription ()
 mkShellDesc language f = shellDesc' $ mkShellDescription commands (eval f)
   where shellDesc' d = d {
@@ -98,10 +107,10 @@ commands = [
   helpCommand "h"
   ]
 
-eval :: (String -> Result String) -> String -> Sh s' ()
-eval f = either shellPutErrLn shellPutStrLn . f
+eval :: (String -> Result String (Globals String String)) -> String -> Sh s' ()
+eval f = either shellPutErrLn shellPutStrLn . fmap fst . f
 
--- Get the current version
+-- | Get the current version
 version' :: String
 version' = showVersion P.version
  

@@ -2,7 +2,7 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 797b677552c81b80399ac8b69e2e398479887a332862d9878a7c508a259975ee
+-- hash: f7f43eaf08f4a2a78ad4d303404ea19c729aa53a0afa30fd0f99d8eb505b8306
 
 name:           lambda-calculator
 version:        2.0.0
@@ -55,6 +55,7 @@ executable lambda-calculator
       Shellac
     , Shellac-haskeline
     , base >=4.9 && <5
+    , containers
     , lambda-calculator
     , optparse-applicative >=0.13
   default-language: Haskell2010
