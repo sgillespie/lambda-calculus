@@ -1,2 +1,3 @@
+*.el
 .stack-work
 dist
