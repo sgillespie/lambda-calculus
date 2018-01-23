@@ -1,5 +1,6 @@
 {-# LANGUAGE FlexibleInstances #-}
 module Language.Lambda (
+  Globals(..),
   LambdaExpr(..),
   ParseError(..),
   PrettyPrint(..),
@@ -12,13 +13,20 @@ module Language.Lambda (
 import Control.Monad
 import Text.Parsec
 
+import qualified Data.Map as Map
+
 import Language.Lambda.Eval
 import Language.Lambda.Expression
 import Language.Lambda.Parser
 import Language.Lambda.Util.PrettyPrint
 
-evalString :: String -> Either ParseError (LambdaExpr String)
-evalString = fmap (evalExpr uniques) . parseExpr
+type Globals = Map.Map String (LambdaExpr String)
+
+evalString :: Globals
+           -> String
+           -> Either ParseError (LambdaExpr String, Globals)
+evalString globals str = flip (,) globals <$> eval'
+  where eval' = evalExpr uniques <$> parseExpr str
 
 uniques :: [String]
 uniques = concatMap (\p -> map (:p) . reverse $ ['a'..'z']) suffix

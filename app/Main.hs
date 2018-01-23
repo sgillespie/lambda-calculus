@@ -2,6 +2,8 @@ module Main where
 
 import Data.Version
 
+import Control.Monad
+import Data.Bifunctor
 import Data.Semigroup
 import Options.Applicative hiding (ParseError)
 import System.Console.Shell
@@ -40,32 +42,26 @@ data Globals n t
   = GlobalsUntyped (Map.Map n (Lambda.LambdaExpr n))
   | GlobalsSystemF (Map.Map n (SystemF.SystemFExpr n t))
 
+newGlobals :: Language -> Globals n t
+newGlobals Untyped = GlobalsUntyped Map.empty
+newGlobals SystemF = GlobalsSystemF Map.empty
+
 -- | The result of an evaluation
 type Result a state = Either a           -- ^ An error
                              (a, state)  -- ^ The result along with its state
 
 -- | Represent a language together with its evaluation function
-data Eval a = Eval a (String -> Result String (Globals String String))
+data Eval a = Eval a (Globals String String -> String -> Result String (Globals String String))
 
 untyped :: Eval Language 
 untyped = Eval Untyped eval
-  where eval = fromEvalString Lambda.evalString
+  where eval (GlobalsUntyped g) s = bimap show toResult $ Lambda.evalString g s
+        toResult (e, g) = (prettyPrint e, GlobalsUntyped g)
 
 systemf :: Eval Language
 systemf = Eval SystemF eval
-  where eval = fromEvalString SystemF.evalString
-
--- | Take a typed evaluation function and return a function that returns a result
--- 
---   For example:
---     (String -> Either ParseError (LambdaExpr String)) -> (String -> Result String)
---     (String -> Either ParseError (SystemFExpr String String)) -> (String -> Result String)
-fromEvalString :: (Show s, PrettyPrint p)
-               => (String -> Either s p)
-               -> (String -> Result String (Globals String String))
-fromEvalString f = either (Left . show) (Right . toResult) . f
-  -- TODO[sgillespie]: Remove placeholder below
-  where toResult expr = (prettyPrint expr, GlobalsUntyped Map.empty)
+  where eval (GlobalsSystemF g) s = bimap show toResult $ SystemF.evalString g s
+        toResult (e, g) = (prettyPrint e, GlobalsSystemF g)
 
 cliParser :: Parser CliOptions
 cliParser = CliOptions 
@@ -82,11 +78,11 @@ cliParser = CliOptions
 runShell' :: CliOptions -> IO ()
 runShell' CliOptions{version=True} = putStrLn version'
 runShell' CliOptions{language=Eval lang eval} 
-  = runShell (mkShellDesc lang eval) haskelineBackend ()
+  = void $ runShell (mkShellDesc lang eval) haskelineBackend (newGlobals lang)
 
 mkShellDesc :: Language 
-            -> (String -> Result String (Globals String String))
-            -> ShellDescription ()
+            -> (Globals String String -> String -> Result String (Globals String String))
+            -> ShellDescription (Globals String String)
 mkShellDesc language f = shellDesc' $ mkShellDescription commands (eval f)
   where shellDesc' d = d {
           greetingText = Just shellGreeting,
@@ -107,10 +103,18 @@ commands = [
   helpCommand "h"
   ]
 
-eval :: (String -> Result String (Globals String String)) -> String -> Sh s' ()
-eval f = either shellPutErrLn shellPutStrLn . fmap fst . f
+eval :: (Globals String String -> String -> Result String (Globals String String))
+     -> String
+     -> Sh (Globals String String) ()
+eval f str = do
+  globals <- getShellSt
+
+  case f globals str of
+    Left err -> shellPutErrLn err
+    Right (result, globals') -> do
+      putShellSt globals'
+      shellPutStr result
 
 -- | Get the current version
 version' :: String
 version' = showVersion P.version
- 
