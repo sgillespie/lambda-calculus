@@ -15,7 +15,7 @@ expr :: Parser (LambdaExpr String)
 expr = try app <|> term
 
 term :: Parser (LambdaExpr String)
-term = abs <|> var <|> parens
+term = let' <|> abs <|> var <|> parens
 
 var :: Parser (LambdaExpr String)
 var = Var <$> identifier
@@ -27,6 +27,10 @@ abs = curry <$> idents <*> expr
 
 app :: Parser (LambdaExpr String)
 app = chainl1 term (return App)
+
+let' :: Parser (LambdaExpr String)
+let' = Let <$> ident <*> expr
+  where ident = keyword "let" *> identifier <* symbol '='
 
 parens :: Parser (LambdaExpr String)
 parens = symbol '(' *> expr <* symbol ')'
@@ -44,3 +48,6 @@ identifier = lexeme ((:) <$> first <*> many rest)
 
 symbol :: Char -> Parser ()
 symbol = void . lexeme . char
+
+keyword :: String -> Parser ()
+keyword = void . lexeme . string

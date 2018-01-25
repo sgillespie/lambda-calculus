@@ -27,13 +27,17 @@ spec = describe "parseExpr" $ do
   it "parses chained applications" $
     parseExpr "f x y" `shouldBe` Right (App (App (Var "f") (Var "x")) (Var "y"))
 
+  it "parses simple let expressions" $
+    parseExpr "let x = z" `shouldBe` Right (Let "x" (Var "z"))
+
   it "parses complex expressions" $ do
     let exprs = [
           "\\f x. f x",
           "(\\p x y. y) (\\p x y. x)",
           "f (\\x. x)",
           "(\\x . f x) g y",
-          "(\\f . (\\ x y. f x y) f x y) w x y"
+          "(\\f . (\\ x y. f x y) f x y) w x y",
+          "let x = \\f x. f x"
           ]
     
     mapM_ (flip shouldSatisfy isRight . parseExpr) exprs

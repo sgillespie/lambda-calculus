@@ -17,6 +17,9 @@ spec = describe "prettyPrint" $ do
       prettyPrint (App (Var "a") (Var "b"))
         `shouldBe` "a b"
 
+    it "prints simple let expressions" $
+      prettyPrint (Let "x" (Var "y")) `shouldBe` "let x = y"
+
     it "prints nested abstractions" $
       prettyPrint (Abs "f" (Abs "x" (Var "x")))
         `shouldBe` "λf x. x"
@@ -37,3 +40,7 @@ spec = describe "prettyPrint" $ do
       
       prettyPrint (App (Abs "f" (Var "f")) (Abs "g" (Var "g")))
         `shouldBe` "(λf. f) (λg. g)"
+
+    it "prints complex let expressions" $
+      prettyPrint (Let "x" (Abs "a" (Abs "b" (App (Var "a") (Var "b")))))
+        `shouldBe` "let x = λa b. a b"

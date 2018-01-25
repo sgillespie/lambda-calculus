@@ -9,6 +9,7 @@ data LambdaExpr name
   = Var name
   | App (LambdaExpr name) (LambdaExpr name)
   | Abs name (LambdaExpr name)
+  | Let name (LambdaExpr name)
   deriving (Eq, Show)
 
 -- Pretty printing
@@ -20,6 +21,7 @@ pprExpr :: PrettyPrint n => PDoc String -> LambdaExpr n -> PDoc String
 pprExpr pdoc (Var n)      = prettyPrint n `add` pdoc
 pprExpr pdoc (Abs n body) = pprAbs pdoc n body
 pprExpr pdoc (App e1 e2)  = pprApp pdoc e1 e2
+pprExpr pdoc (Let n expr) = pprLet pdoc n expr
 
 -- Pretty print an abstraction 
 pprAbs :: PrettyPrint n => PDoc String -> n -> LambdaExpr n -> PDoc String
@@ -44,6 +46,15 @@ pprApp pdoc e1@(Abs _ _) e2 = betweenParens (pprExpr pdoc e1) pdoc
   `mappend` addSpace (pprExpr pdoc e2)
 pprApp pdoc e1 e2
   = pprExpr pdoc e1 `mappend` addSpace (pprExpr pdoc e2)
+
+pprLet :: PrettyPrint n
+       => PDoc String
+       -> n
+       -> LambdaExpr n
+       -> PDoc String
+pprLet pdoc name expr
+  = intercalate ss " " pdoc
+  where ss = ["let", prettyPrint name, "=", prettyPrint expr]
 
 uncurry :: n -> LambdaExpr n -> ([n], LambdaExpr n)
 uncurry n = uncurry' [n]
