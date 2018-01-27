@@ -113,7 +113,7 @@ eval f str = do
     Left err -> shellPutErrLn err
     Right (result, globals') -> do
       putShellSt globals'
-      shellPutStr result
+      shellPutStrLn result
 
 -- | Get the current version
 version' :: String
