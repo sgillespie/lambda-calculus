@@ -25,8 +25,7 @@ type Globals = Map.Map String (LambdaExpr String)
 evalString :: Globals
            -> String
            -> Either ParseError (LambdaExpr String, Globals)
-evalString globals str = flip (,) globals <$> eval'
-  where eval' = evalExpr uniques <$> parseExpr str
+evalString globals str = evalExpr globals uniques <$> parseExpr str
 
 uniques :: [String]
 uniques = concatMap (\p -> map (:p) . reverse $ ['a'..'z']) suffix

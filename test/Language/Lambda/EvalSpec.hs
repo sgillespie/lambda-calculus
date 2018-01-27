@@ -1,5 +1,6 @@
 module Language.Lambda.EvalSpec where
 
+import Data.Map (empty, insert)
 import Test.Hspec
 
 import Language.Lambda
@@ -9,7 +10,7 @@ import Language.Lambda.Expression
 spec :: Spec
 spec = do
   describe "evalExpr" $ do
-    let evalExpr' = evalExpr uniques
+    let evalExpr' = fst <$> evalExpr empty uniques
     
     it "beta reduces" $ do
       let expr = App (Abs "x" (Var "x")) (Var "z")
@@ -27,6 +28,23 @@ spec = do
       let expr = App (Abs "f" (Abs "x" (App (Var "f") (Var "x"))))
                      (Abs "f" (Var "x"))
       evalExpr' expr `shouldBe` Abs "z" (Var "x")
+
+    it "reduces let bodies" $ do
+      let expr = Let "x" $ App (Abs "y" (Var "y")) (Var "z")
+      evalExpr' expr `shouldBe` Let "x" (Var "z")
+
+    it "let expressions update state" $ do
+      let expr = Let "w" (Var "x")
+          (_, globals) = evalExpr empty uniques expr
+
+      globals `shouldBe` insert "w" (Var "x") empty
+
+    it "subs global variables" $ do
+      let globals = insert "w" (Var "x") empty
+          expr = Var "w"
+
+      fst (evalExpr globals uniques expr)
+        `shouldBe` Var "x"
 
   describe "betaReduce" $ do
     let betaReduce' = betaReduce []
