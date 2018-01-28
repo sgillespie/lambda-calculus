@@ -15,18 +15,23 @@ evalExpr :: (Eq n, Ord n)
          -> (LambdaExpr n, Map.Map n (LambdaExpr n))
 evalExpr globals uniqs (Let name expr)
   = (Let name expr', Map.insert name expr' globals)
-  where expr' = evalExpr' uniqs (subGlobals globals expr)
+  where expr' = evalExpr' uniqs (subGlobals globals uniqs expr)
 evalExpr globals uniqs expr = (evalExpr' uniqs expr', globals)
-  where expr' = subGlobals globals expr
+  where expr' = subGlobals globals uniqs expr
 
 subGlobals :: (Eq n, Ord n)
            => Map.Map n (LambdaExpr n) -- ^ globals
+           -> [n]                      -- ^ unique supply
            -> LambdaExpr n             -- ^ the expression
            -> LambdaExpr n
-subGlobals g e@(Var x) = Map.findWithDefault e x g
-subGlobals g (App e1 e2) = App (subGlobals g e1) (subGlobals g e2)
-subGlobals g (Abs n expr) = Abs n (subGlobals g expr)
-subGlobals _ expr = expr
+subGlobals globals uniqs expr@(Var x) = Map.findWithDefault expr x globals
+subGlobals globals uniqs (App e1 e2)  = App (subGlobals globals uniqs e1)
+                                            (subGlobals globals uniqs e2)
+subGlobals globals uniqs (Abs n expr) = Abs n expr'
+  where expr' | Map.member n globals = expr
+              | otherwise            = subGlobals globals uniqs expr
+        fvs = freeVarsOf expr
+subGlobals _ _ expr = expr
 
 -- | Evaluate an expression; does not support `let`
 evalExpr' :: Eq n

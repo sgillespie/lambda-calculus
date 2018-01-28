@@ -1,6 +1,6 @@
 module Language.Lambda.EvalSpec where
 
-import Data.Map (empty, insert)
+import Data.Map (fromList, empty, insert)
 import Test.Hspec
 
 import Language.Lambda
@@ -45,6 +45,21 @@ spec = do
 
       fst (evalExpr globals uniques expr)
         `shouldBe` Var "x"
+
+  describe "subGlobals" $ do
+    let globals = fromList [("w", Var "x")]
+        subGlobals' = subGlobals globals ["a"]
+    
+    it "subs simple variables" $
+      subGlobals' (Var "w") `shouldBe` Var "x"
+
+    it "does not sub shadowed bindings" $ do
+      let expr = Abs "w" (Var "w")
+      subGlobals' expr `shouldBe` expr
+
+    xit "does not capture globals" $ do
+      let expr = Abs "x" (Var "w")
+      subGlobals' expr `shouldBe` Abs "a" (Var "x")
 
   describe "betaReduce" $ do
     let betaReduce' = betaReduce []
