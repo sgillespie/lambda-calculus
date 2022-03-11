@@ -88,7 +88,7 @@ the following expression.
 This defines a function that takes an argument `x` with type `T`.
 
 ## Examples
-Church Numerals can be used in &lambda;<sub>rarr;</sub> just as they are in
+Church Numerals can be used in &lambda;<sub>&rarr;</sub> just as they are in
 &lambda;. In &lambda;, the Church Numerals are defined by
 
     0: λ f x. x
@@ -234,7 +234,7 @@ valid examples of variables:
 
 ### Abstraction
 Abstractions in System F are functions that take one argument. Just as in
-&lambda;<sub>rarr;</sub>, they take the form
+&lambda;<sub>&rarr;</sub>, they take the form
 
     λ x:T. body
 
