@@ -231,7 +231,7 @@ As expected, the result is `1`.
 &lambda; is a small but expressive language. It has only three types of expressions: variables, abstractions, and function applications. Even without built-ins, we can express both simple and complex data types including integers, booleans, and records. Evaluation of &lambda; is equally simple, with only three reduction rules: &Beta;-reduction, &alpha;-conversion, and &eta;-conversion.
     
 # References
-1. [Lambda Calculus](https://en.wikipedia.org/wiki/Lambd.a_calculus). Wikipedia: The Free Encyclopedia
+1. [Lambda Calculus](https://en.wikipedia.org/wiki/Lambda_calculus). Wikipedia: The Free Encyclopedia
 2. Types and Programming Languages. Benjamin C. Pierce
 3. [Simply typed lambda calculus](https://en.wikipedia.org/wiki/Simply_typed_lambda_calculus). Wikipedia: The Free Encyclopedia
 4. [System F](https://en.wikipedia.org/wiki/System_F). Wikipedia: The Free Encyclopedia
