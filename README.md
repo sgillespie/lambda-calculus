@@ -18,8 +18,8 @@ Introductory material is provided. They can be found at
 ### Extended Examples
 More examples can be found in the Lambda Calculator's test-suite, located at
 
-[test/Language/Lambda/Untyped/Examples](test/Language/Lambda/Untyped/Examples)
-[test/Language/Lambda/SystemF/Examples](test/Language/Lambda/SystemF/Examples)
+ * [test/Language/Lambda/Untyped/Examples](test/Language/Lambda/Untyped/Examples)
+ * [test/Language/Lambda/SystemF/Examples](test/Language/Lambda/SystemF/Examples)
 
 ## Implementation
 A simple implementation of lambda calculus is available at https://github.com/sgillespie/lambda-calculator.
