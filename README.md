@@ -12,13 +12,13 @@ implementing functional programming languages.
 ## Introduction to Lambda Calculus
 Introductory material is provided. They can be found at
 
-[doc/lambda-calculus.md](doc/lambda-calculus.md)
+ * [doc/lambda-calculus.md](doc/lambda-calculus.md)
+ * [doc/system-f.md](doc/system-f.md)
 
 ### Extended Examples
 More examples can be found in the Lambda Calculator's test-suite, located at
 
- * [test/Language/Lambda/Untyped/Examples](https://github.com/sgillespie/lambda-calculator/tree/master/test/Language/Lambda/Untyped/Examples)
- * [test/Language/Lambda/SystemF/Examples](https://github.com/sgillespie/lambda-calculator/tree/master/test/Language/Lambda/SystemF/Examples)
+[test/Language/Lambda/Untyped/Examples](https://github.com/sgillespie/lambda-calculator/tree/master/test/Language/Lambda/Untyped/Examples)
 
 ## Implementation
 A simple implementation of lambda calculus is available at https://github.com/sgillespie/lambda-calculator.
