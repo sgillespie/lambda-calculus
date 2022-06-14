@@ -7,19 +7,18 @@ on function abstraction and application.
 This project is intended to be an educational resource for learning and 
 implementing functional programming languages.
 
-**Looking for Lambda Calculator?** It's been moved into it's own repository: https://github.com/sgillespie/lambda-calculator
+**Looking for Lambda Calculator?** It's been moved to [sgillespie/lambda-calculator](https://github.com/sgillespie/lambda-calculator)
 
 ## Introduction to Lambda Calculus
 Introductory material is provided. They can be found at
 
- * [doc/lambda-calculus.md](doc/lambda-calculus.md)
- * [doc/system-f.md](doc/system-f.md)
+[doc/lambda-calculus.md](doc/lambda-calculus.md)
 
 ### Extended Examples
 More examples can be found in the Lambda Calculator's test-suite, located at
 
- * [test/Language/Lambda/Untyped/Examples](test/Language/Lambda/Untyped/Examples)
- * [test/Language/Lambda/SystemF/Examples](test/Language/Lambda/SystemF/Examples)
+ * [test/Language/Lambda/Untyped/Examples](https://github.com/sgillespie/lambda-calculator/tree/master/test/Language/Lambda/Untyped/Examples)
+ * [test/Language/Lambda/SystemF/Examples](https://github.com/sgillespie/lambda-calculator/tree/master/test/Language/Lambda/SystemF/Examples)
 
 ## Implementation
 A simple implementation of lambda calculus is available at https://github.com/sgillespie/lambda-calculator.
